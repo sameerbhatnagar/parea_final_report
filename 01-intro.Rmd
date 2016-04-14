@@ -19,3 +19,50 @@ knitr::kable(
 ```
 
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. ddd aaa
+
+```{r}
+library(boot)
+
+mouse.c <- scan("http://www.rohan.sdsu.edu/~babailey/stat672/mouse.c.data")
+mouse.t <- scan("http://www.rohan.sdsu.edu/~babailey/stat672/mouse.t.data")
+
+
+y<-mouse.c
+sd(y)
+
+n.c<-length(mouse.c)
+
+B<-100000
+
+thetahat.c<-mean(mouse.c)
+sehat.c<-sd(mouse.c)*sqrt((n.c-1)/n.c^2)
+
+theta.boot<-rep(0,B)
+
+Zb<-rep(0,B)
+Zbt<-rep(0,B)
+for(b in 1:B){
+
+	yboot<-sample(mouse.c,size=n.c,rep=T)
+	thetahat.boot<-mean(yboot)
+	sehat.boot<-sd(yboot)*sqrt((n.c-1)/n.c^2)
+
+	Zb[b]<-(thetahat.boot-thetahat.c)/sehat.c
+
+	Zbt[b]<-(thetahat.boot-thetahat.c)/sehat.boot
+
+	theta.boot[b]<-thetahat.boot
+
+}
+hist(theta.boot,xlab=expression(theta),br=seq(0,130,by=5),col='gray',main=expression(paste('Bootstrap resamples of ',hat(theta))));box()
+abline(v=thetahat.c,col='red',lwd=2)
+
+abline(v=quantile(theta.boot,prob=c(0.025,0.975)),col='red',lty=2,lwd=2)
+
+alpha<-0.05
+qs<-quantile(Zb,prob=c(1-alpha/2,alpha/2))
+qst<-quantile(Zbt,prob=c(1-alpha/2,alpha/2))
+abline(v=thetahat.c-qst*sehat.c,col='green',lty=2,lwd=2)
+abline(v=thetahat.c-qs*sehat.c,col='blue',lty=2,lwd=2)
+```
+
