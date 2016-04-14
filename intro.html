@@ -5,25 +5,25 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>A Minimal Book Example</title>
+  <title>Biostatistics in R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
   <meta name="generator" content="bookdown 0.0.64 and GitBook 2.6.7">
 
-  <meta property="og:title" content="A Minimal Book Example" />
+  <meta property="og:title" content="Biostatistics in R" />
   <meta property="og:type" content="book" />
   
   
   <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="sahirbhatnagar/biosR" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Minimal Book Example" />
+  <meta name="twitter:title" content="Biostatistics in R" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
 
-<meta name="author" content="Yihui Xie">
+<meta name="author" content="Sahir Rai Bhatnagar">
 
 <meta name="date" content="2016-04-14">
 
@@ -131,7 +131,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Biostatistics in R</a>
           </h1>
         </div>
 
@@ -311,6 +311,53 @@ Figure 2.1: Here is a nice figure!
 </tbody>
 </table>
 <p>You can write citations, too. For example, we are using the <strong>bookdown</strong> package <span class="citation">(Xie <a href="references.html#ref-R-bookdown">2016</a>)</span> in this sample book, which was built on top of R Markdown and <strong>knitr</strong> <span class="citation">(Xie <a href="references.html#ref-xie2015">2015</a>)</span>. ddd aaa</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(boot)
+
+mouse.c &lt;-<span class="st"> </span><span class="kw">scan</span>(<span class="st">&quot;http://www.rohan.sdsu.edu/~babailey/stat672/mouse.c.data&quot;</span>)
+mouse.t &lt;-<span class="st"> </span><span class="kw">scan</span>(<span class="st">&quot;http://www.rohan.sdsu.edu/~babailey/stat672/mouse.t.data&quot;</span>)
+
+
+y &lt;-<span class="st"> </span>mouse.c
+<span class="kw">sd</span>(y)</code></pre></div>
+<pre><code>## [1] 42.41691</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.c &lt;-<span class="st"> </span><span class="kw">length</span>(mouse.c)
+
+B &lt;-<span class="st"> </span><span class="fl">1e+05</span>
+
+thetahat.c &lt;-<span class="st"> </span><span class="kw">mean</span>(mouse.c)
+sehat.c &lt;-<span class="st"> </span><span class="kw">sd</span>(mouse.c) *<span class="st"> </span><span class="kw">sqrt</span>((n.c -<span class="st"> </span><span class="dv">1</span>)/n.c^<span class="dv">2</span>)
+
+theta.boot &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, B)
+
+Zb &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, B)
+Zbt &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, B)
+for (b in <span class="dv">1</span>:B) {
+    
+    yboot &lt;-<span class="st"> </span><span class="kw">sample</span>(mouse.c, <span class="dt">size =</span> n.c, <span class="dt">rep =</span> T)
+    thetahat.boot &lt;-<span class="st"> </span><span class="kw">mean</span>(yboot)
+    sehat.boot &lt;-<span class="st"> </span><span class="kw">sd</span>(yboot) *<span class="st"> </span><span class="kw">sqrt</span>((n.c -<span class="st"> </span><span class="dv">1</span>)/n.c^<span class="dv">2</span>)
+    
+    Zb[b] &lt;-<span class="st"> </span>(thetahat.boot -<span class="st"> </span>thetahat.c)/sehat.c
+    
+    Zbt[b] &lt;-<span class="st"> </span>(thetahat.boot -<span class="st"> </span>thetahat.c)/sehat.boot
+    
+    theta.boot[b] &lt;-<span class="st"> </span>thetahat.boot
+    
+}
+<span class="kw">hist</span>(theta.boot, <span class="dt">xlab =</span> <span class="kw">expression</span>(theta), <span class="dt">br =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">130</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>, 
+    <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Bootstrap resamples of &quot;</span>, <span class="kw">hat</span>(theta))))
+<span class="kw">box</span>()
+<span class="kw">abline</span>(<span class="dt">v =</span> thetahat.c, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">quantile</span>(theta.boot, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, 
+    <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+qs &lt;-<span class="st"> </span><span class="kw">quantile</span>(Zb, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span>alpha/<span class="dv">2</span>, alpha/<span class="dv">2</span>))
+qst &lt;-<span class="st"> </span><span class="kw">quantile</span>(Zbt, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span>alpha/<span class="dv">2</span>, alpha/<span class="dv">2</span>))
+<span class="kw">abline</span>(<span class="dt">v =</span> thetahat.c -<span class="st"> </span>qst *<span class="st"> </span>sehat.c, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> thetahat.c -<span class="st"> </span>qs *<span class="st"> </span>sehat.c, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-3-1.png" alt="" /><!-- --></p>
 
 </div>
             </section>
