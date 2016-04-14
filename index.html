@@ -27,6 +27,11 @@
 
 <meta name="date" content="2016-04-14">
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -120,6 +125,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="simulations.html"><a href="simulations.html"><i class="fa fa-check"></i><b>3</b> Simulations</a><ul>
 <li class="chapter" data-level="3.1" data-path="simulations.html"><a href="simulations.html#what-is-a-simulation-study"><i class="fa fa-check"></i><b>3.1</b> What is a simulation study?</a></li>
+<li class="chapter" data-level="3.2" data-path="simulations.html"><a href="simulations.html#why-conduct-a-simulation-study"><i class="fa fa-check"></i><b>3.2</b> Why conduct a simulation study?</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simulations.html"><a href="simulations.html#understanding-the-behaviour-of-a-statistical-quantity"><i class="fa fa-check"></i><b>3.2.1</b> Understanding the behaviour of a statistical quantity</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simulations.html"><a href="simulations.html#model-selection"><i class="fa fa-check"></i><b>3.2.2</b> Model selection</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simulations.html"><a href="simulations.html#model-assessment"><i class="fa fa-check"></i><b>3.2.3</b> Model assessment</a></li>
+<li class="chapter" data-level="3.2.4" data-path="simulations.html"><a href="simulations.html#calculating-measures-of-uncertainty"><i class="fa fa-check"></i><b>3.2.4</b> Calculating measures of uncertainty</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
@@ -223,6 +234,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
