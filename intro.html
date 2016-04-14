@@ -353,8 +353,8 @@ for (b in <span class="dv">1</span>:B) {
     theta.boot[b] &lt;-<span class="st"> </span>thetahat.boot
     
 }
-<span class="kw">hist</span>(theta.boot, <span class="dt">xlab =</span> <span class="kw">expression</span>(theta), <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>, <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Bootstrap resamples of &quot;</span>, 
-    <span class="kw">hat</span>(theta))))
+<span class="kw">hist</span>(theta.boot, <span class="dt">xlab =</span> <span class="kw">expression</span>(theta), <span class="dt">br =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">130</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>, 
+    <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Bootstrap resamples of &quot;</span>, <span class="kw">hat</span>(theta))))
 <span class="kw">box</span>()
 <span class="kw">abline</span>(<span class="dt">v =</span> thetahat.c, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 
