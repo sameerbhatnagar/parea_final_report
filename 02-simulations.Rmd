@@ -11,7 +11,7 @@ Here are some results from a Google Search:
 2. Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one's own research[@hallgren2013conducting]
 
 
-```{r}
+```{r, tidy=FALSE}
 library(DiagrammeR)
 mermaid("
 graph LR
