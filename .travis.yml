@@ -8,14 +8,6 @@ env:
 r_github_packages:
   - rstudio/bookdown
 
-repos:
-  XRAN: http://yihui.name/xran
-
-before_install:
-  - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
-  - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
-  - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
-
 install:
   - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
