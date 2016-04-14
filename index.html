@@ -7,31 +7,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Biostatistics in R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="description" content="These are a collection of tutorials that I have found useful in statistical applications.">
   <meta name="generator" content="bookdown 0.0.64 and GitBook 2.6.7">
 
   <meta property="og:title" content="Biostatistics in R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="These are a collection of tutorials that I have found useful in statistical applications." />
   <meta name="github-repo" content="sahirbhatnagar/biosR" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Biostatistics in R" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="These are a collection of tutorials that I have found useful in statistical applications." />
   
 
 <meta name="author" content="Sahir Rai Bhatnagar">
 
 <meta name="date" content="2016-04-14">
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -109,7 +104,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i><b>1.2</b> R Packages</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
 <li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
@@ -146,11 +144,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="prerequisites" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>This is a <em>sample</em> book written in <strong>Markdown</strong>. You can use anything that Pandoc’s Markdown supports, e.g., a math equation <span class="math inline">\(a^2 + b^2 = c^2\)</span>.</p>
-<p>For now, you have to install the development versions of <strong>bookdown</strong> from Github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/bookdown&quot;</span>)</code></pre></div>
-<p>Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading <code>#</code>.</p>
+<div id="install-r-and-rstudio" class="section level2">
+<h2><span class="header-section-number">1.1</span> Install R and RStudio</h2>
+<p>All examples in this book are run in an <a href="https://cran.r-project.org/">R</a> environment. You also need a recent version of <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio</a>, which is a software application that facilitates how you interact with <code>R</code>. It is developed by data enthusiasts who consider statistics to be more than just simulations, formulas and proofs. RStudio emphasizes the following:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Version control</strong>: <a href="http://stackoverflow.com/questions/1408450/why-should-i-use-version-control">Why I should use version control</a> especially for the <a href="http://stackoverflow.com/questions/2712421/r-and-version-control-for-the-solo-data-analyst">solo data analyst</a>.</p></li>
+<li><p><strong>Reproducible research</strong>: seamless integration with <a href="http://rmarkdown.rstudio.com/">RMarkdown</a> for creating <a href="http://yihui.name/knitr/">dynamic documents</a> and presentations</p></li>
+<li><p><strong>Creating R Packages</strong>: seamless integration with the <a href="https://github.com/hadley/devtools">devtools</a> package for creating software that implements your statistical method or analysis.</p></li>
+</ol>
+</div>
+<div id="r-packages" class="section level2">
+<h2><span class="header-section-number">1.2</span> R Packages</h2>
+<p>The following packages will be called upon at some point, so please install them before getting started with the tutorials. Enter the following command in <code>R</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;data.table&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;&quot;</span>))</code></pre></div>
 
+</div>
 </div>
             </section>
 
@@ -185,7 +193,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"link": "https://github.com/sahirbhatnagar/biosR/edit/master/index.Rmd",
 "text": null
 },
 "download": null,
@@ -196,17 +204,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
