@@ -72,6 +72,222 @@ class sq green
 ")
 ```
 
+Boostrap, Cross Validation, Sensitivity analysis and Permutations are all similar in that they have multiple inputs with an equal number of outputs, with a fixed procedure. What differentiates them is the context in which they can be applied. The technique you choose depends entirely on the question you're trying to answer. 
+
+## Why conduct a simulation study?
+
+The most common applications of simulation studies are the following
+
+### Understanding the behaviour of a statistical quantity
+
+
+#### Example 1: The Central Limit Theorem
+
+The [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) is one of the most famous theorems in statistics. This theorem basically states that the sum or mean of independent random variables (with finite mean and variance) will converge to a normal distribution, regardless of the distribution of the random variables. The following figure clearly illustrates this point [@joseph]
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/clt.png")
+```
+
+In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in `R` to numerically verify this result:
+
+```{r}
+# number of random numbers to generate from each distribution
+n <- 1e4
+
+# true parameters of each distribution
+mean.walk <- 4 ; var.walk <- 1
+mean.bus <- (4+16)/2 ; var.bus <- (16-4)^2/12
+mean.ride <- 8 ; var.ride <- 8 
+mean.climb <- 6*0.5 ; var.climb <- 6*0.5^2
+mean.fall <- 1/4 ; var.fall <- 1/4^2
+
+# generate random samples from each distribution
+walk <- rnorm(n, mean.walk, var.walk)
+bus <- runif(n, 4, 16)
+ride <- rpois(n, mean.ride)
+climb <- rgamma(n, shape = 6, scale = 0.5)
+fall <- rexp(n, rate = 1/mean.fall)
+
+# true mean and variance of sum
+mean.sum <- mean.walk+mean.bus+mean.ride+mean.climb+mean.fall
+var.sum <- var.walk+var.bus+var.ride+var.climb+var.fall
+
+# create a data frame of the data and calculate the sum for each sample
+DT <- data.frame(walk, bus, ride, climb, fall)
+DT$sum <- apply(DT,1,sum)
+
+# plot each histogram and superimpose theoretical 
+# distribution to empirical one
+par(mfrow=c(2,3))
+hist(walk, main="Normal(mean=4,sd=1)", freq=FALSE)
+hist(bus, main="Uniform(a=4,b=16)", freq=FALSE)
+hist(ride, main="Poisson(lambda=8)", freq=FALSE)
+hist(climb, main="Gamma(shape=6, scale=0.5)", freq=FALSE)
+hist(fall, main="Exponential(rate=4)", freq=FALSE)
+hist(DT$sum, xlab='Total time', main=paste("Distribution of Sum, n = ",n), freq=FALSE)
+curve(dnorm(x,mean=mean.sum,sd=sqrt(var.sum)),0,50,add=TRUE,lwd=2,col="red")
+```
+
+#### Example 2: Power Calculation
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+library(pwr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+
+```{r data, echo=FALSE}
+ptab <- cbind(NULL, NULL)       # initalize ptab
+
+for (i in seq(0,1, length.out = 200)){
+  pwrt1 <- pwr.t2n.test(n1 = 28, n2 = 1406, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  pwrt2 <- pwr.t2n.test(n1 = 144, n2 = 1290, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  pwrt3 <- pwr.t2n.test(n1 = 287, n2 = 1147, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  pwrt4 <- pwr.t2n.test(n1 = 430, n2 = 1004, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  pwrt5 <- pwr.t2n.test(n1 = 574, n2 = 860, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  pwrt6 <- pwr.t2n.test(n1 = 717, n2 = 717, sig.level = 0.05, power = NULL, d = i, alternative="two.sided")
+  ptab <- rbind(ptab, cbind(pwrt1$d, pwrt1$power,
+                            pwrt2$d, pwrt2$power,
+                            pwrt3$d, pwrt3$power,
+                            pwrt4$d, pwrt4$power,
+                            pwrt5$d, pwrt5$power,
+                            pwrt6$d, pwrt6$power))
+}
+
+ptab <- cbind(seq_len(nrow(ptab)), ptab)
+
+colnames(ptab) <- c("id","n1=28, n2=1406.effect size","n1=28, n2=1406.power",
+                    "n1=144, n2=1290.effect size","n1=144, n2=1290.power",
+                    "n1=287, n2=1147.effect size","n1=287, n2=1147.power",
+                    "n1=430, n2=1004.effect size","n1=430, n2=1004.power",
+                    "n1=574, n2=860.effect size","n1=574, n2=860.power",
+                    "n1=717, n2=717.effect size","n1=717, n2=717.power")
+
+
+temp <- ptab %>%
+  as.data.frame() %>%
+  gather(key = name, value = val, 2:13) %>%
+  separate(col = name, into = c("group", "var"), sep = "\\.") %>%
+  spread(key = var, value = val)
+
+
+temp$group <- factor(temp$group, levels = c("n1=28, n2=1406", "n1=144, n2=1290", "n1=287, n2=1147", "n1=430, n2=1004",
+                                       "n1=574, n2=860", "n1=717, n2=717"))
+```
+
+
+When performing [Student's t-test](https://en.wikipedia.org/wiki/Student%27s_t-test) to compare difference in means between two group, it is a useful exercise to determine the effect of unequal sample sizes in the comparison groups on **power**. Large imbalances generally will not have adequate statistical power to detect even large effect sizes associated with a factor, leading to a high Type II error rate as shown in the figure below:
+
+```{r echo=FALSE, opts.label='fig.full'}
+p <- ggplot(temp, aes(x = `effect size`, y = power, color = group))
+p + geom_line(size=2) + theme_bw() + theme(legend.position = "bottom",
+                                           axis.text=element_text(size=14),
+                                           axis.title=element_text(size=14),
+                                           legend.text=element_text(size=14)) 
+```
+
+To jusity this reasoning I performed a power analysis for different group sizes. I considered the following group sizes:
+
+1. n1 = 28, n2 = 1406: n1 represents 2% of the entire sample size of 1434
+2. n1 = 144, n2 = 1290: n1 represents 10% of the entire sample size of 1434
+3. n1 = 287, n2 = 1147: n1 represents 20% of the entire sample size of 1434
+4. n1 = 430, n2 = 1004: n1 represents 30% of the entire sample size of 1434
+5. n1 = 574, n2 = 860: n1 represents 40% of the entire sample size of 1434
+6. n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)
+
+In the figure above we plotted the power curves for the $t$-test, as a function of the effect size, assuming a Type I error rate of 5%. 
+
+Here is the code used to produce the above plot
+
+```{r, eval=FALSE}
+library(pwr) # for power calcs
+library(dplyr) # for data manipulation
+library(tidyr) # for data manipulation
+library(ggplot2) # for plotting power curves
+
+# Generate power calculations
+ptab <- cbind(NULL, NULL)       
+
+for (i in seq(0,1, length.out = 200)){
+  pwrt1 <- pwr.t2n.test(n1 = 28, n2 = 1406, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  pwrt2 <- pwr.t2n.test(n1 = 144, n2 = 1290, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  pwrt3 <- pwr.t2n.test(n1 = 287, n2 = 1147, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  pwrt4 <- pwr.t2n.test(n1 = 430, n2 = 1004, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  pwrt5 <- pwr.t2n.test(n1 = 574, n2 = 860, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  pwrt6 <- pwr.t2n.test(n1 = 717, n2 = 717, 
+                        sig.level = 0.05, power = NULL, 
+                        d = i, alternative="two.sided")
+  ptab <- rbind(ptab, cbind(pwrt1$d, pwrt1$power,
+                            pwrt2$d, pwrt2$power,
+                            pwrt3$d, pwrt3$power,
+                            pwrt4$d, pwrt4$power,
+                            pwrt5$d, pwrt5$power,
+                            pwrt6$d, pwrt6$power))
+}
+
+ptab <- cbind(seq_len(nrow(ptab)), ptab)
+
+colnames(ptab) <- c("id","n1=28, n2=1406.effect size","n1=28, n2=1406.power",
+                    "n1=144, n2=1290.effect size","n1=144, n2=1290.power",
+                    "n1=287, n2=1147.effect size","n1=287, n2=1147.power",
+                    "n1=430, n2=1004.effect size","n1=430, n2=1004.power",
+                    "n1=574, n2=860.effect size","n1=574, n2=860.power",
+                    "n1=717, n2=717.effect size","n1=717, n2=717.power")
+
+# get data into right format for ggplot2
+temp <- ptab %>%
+  as.data.frame() %>%
+  gather(key = name, value = val, 2:13) %>%
+  separate(col = name, into = c("group", "var"), sep = "\\.") %>%
+  spread(key = var, value = val)
+
+# factor group
+temp$group <- factor(temp$group, 
+                levels = c("n1=28, n2=1406", "n1=144, n2=1290", 
+                "n1=287, n2=1147", "n1=430, n2=1004",
+                "n1=574, n2=860", "n1=717, n2=717"))
+
+
+# plot
+p <- ggplot(temp, aes(x = `effect size`, y = power, color = group))
+p + 
+geom_line(size=2) + 
+theme_bw() + 
+theme(legend.position = "bottom", 
+      axis.text=element_text(size=14), 
+      axis.title=element_text(size=14), 
+      legend.text=element_text(size=14))
+```
+
+
+### Model selection
+
+
+
+
+### Model assessment
+
+CV
+
+### Calculating measures of uncertainty 
+
+Bootstrap
+
+
+<script src="https://gist.github.com/sahirbhatnagar/9507cc24983103ad9f14.js"></script>
 
 
 
