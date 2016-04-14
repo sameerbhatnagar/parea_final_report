@@ -11,6 +11,10 @@ r_github_packages:
 install:
   - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
+  - Rscript -e "if (!require('microbenchmark')) install.packages('microbenchmark')"
+  - Rscript -e "if (!require('DiagrammeR')) install.packages('DiagrammeR')"
+
+
 
 before_script:
   - chmod +x ./_build.sh
