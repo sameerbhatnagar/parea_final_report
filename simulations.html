@@ -33,8 +33,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="final-words.html">
-
+<link rel="prev" href="intro.html">
+<link rel="next" href="methods.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -148,25 +148,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> References</h1>
+<div id="simulations" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Simulations</h1>
+<p>In this chapter you’ll learn how to conduct a simulation study. The word <em>simulation</em> gets thrown around alot as a trivial concept, though I have found that this term is either misused by epidemiologists or abused by statisticians. A source of this confusion arises from the fact that it is not well defined. This is not by accident. A simulation study has so many moving parts that it would be impossible to characterize in a single word. However, there are some common underlying themes behind simulation studies. For this reason, the main focus here will be on creating a general roadmap for conducting these types of analyses, that can be applied to very different settings.</p>
+<div id="what-is-a-simulation-study" class="section level2">
+<h2><span class="header-section-number">3.1</span> What is a simulation study?</h2>
+<p>Here are some results from a Google Search:</p>
+<ol style="list-style-type: decimal">
+<li>A numerical technique for conducting experiments on the computer <span class="citation">(Davidian <a href="references.html#ref-marie">2005</a>)</span></li>
+<li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren, n.d.)</span></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DiagrammeR)
+<span class="kw">mermaid</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">graph LR</span><span class="ch">\n</span><span class="st">A(Rounded)--&gt;B[Rectangular]</span><span class="ch">\n</span><span class="st">B--&gt;C{A Rhombus}</span><span class="ch">\n</span><span class="st">C--&gt;D[Rectangle One]</span><span class="ch">\n</span><span class="st">C--&gt;E[Rectangle Two]</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
+<p><div id="htmlwidget-1085" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1085">{"x":{"diagram":"\ngraph LR\nA(Rounded)-->B[Rectangular]\nB-->C{A Rhombus}\nC-->D[Rectangle One]\nC-->E[Rectangle Two]\n"},"evals":[],"jsHooks":[]}</script></p>
 
-<div id="refs" class="references">
-<div id="ref-marie">
-<p>Davidian, Marie. 2005. <em>Simulation Studies in Statistics</em>. <a href="http://www4.stat.ncsu.edu/~davidian/st810a/simulation_handout.pdf" class="uri">http://www4.stat.ncsu.edu/~davidian/st810a/simulation_handout.pdf</a>.</p>
-</div>
-<div id="ref-davison1997bootstrap">
-<p>Davison, Anthony Christopher, and David Victor Hinkley. 1997. <em>Bootstrap Methods and Their Application</em>. Vol. 1. Cambridge university press.</p>
-</div>
-<div id="ref-hallgren2013conducting">
-<p>Hallgren, Kevin A. n.d. “Conducting Simulation Studies in the R Programming Environment.” <em>Tutorials in Quantitative Methods for Psychology</em> 9 (2). NIH Public Access: 43.</p>
-</div>
-<div id="ref-xie2015">
-<p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>
-</div>
-<div id="ref-R-bookdown">
-<p>———. 2016. <em>Bookdown: Authoring Books with R Markdown</em>. <a href="https://github.com/rstudio/bookdown" class="uri">https://github.com/rstudio/bookdown</a>.</p>
-</div>
 </div>
 </div>
             </section>
@@ -174,8 +170,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="final-words.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -202,7 +198,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/sahirbhatnagar/biosR/edit/master/06-references.Rmd",
+"link": "https://github.com/sahirbhatnagar/biosR/edit/master/02-simulations.Rmd",
 "text": null
 },
 "download": null,
