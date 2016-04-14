@@ -10,15 +10,8 @@ Here are some results from a Google Search:
 1. A numerical technique for conducting experiments on the computer [@marie]
 2. Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one's own research[@hallgren2013conducting]
 
-
-```{r, tidy=FALSE}
-library(DiagrammeR)
-mermaid("
-graph LR
-A(Rounded)-->B[Rectangular]
-B-->C{A Rhombus}
-C-->D[Rectangle One]
-C-->E[Rectangle Two]
-")
+```{r, echo = FALSE, out.width = "95%"} 
+knitr::include_graphics("images/diagram.svg")
 ```
+
 
