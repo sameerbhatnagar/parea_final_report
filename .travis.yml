@@ -24,3 +24,5 @@ cache:
 
 install:
   - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
+  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
+  - Rscript -e "if (!require('devtools')) devtools::install_github("rstudio/bookdown")"
