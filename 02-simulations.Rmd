@@ -10,20 +10,47 @@ Here are some results from a Google Search:
 1. A numerical technique for conducting experiments on the computer [@marie]
 2. Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one's own research[@hallgren2013conducting]
 
-I prefer the second definition because it speaks to the generality of simulations. Figure \@ref(fig:sim1) describes the way I see simulations.
+I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way:
 
-```{r sim1, echo = FALSE, out.width = '80%', fig.cap="Simulation study general concept"} 
-knitr::include_graphics("images/sim1.svg")
-```
-
-```{r sim1mod, echo=FALSE, fig.cap='Simulation study: general concept'}
+```{r, echo=FALSE}
 DiagrammeR::mermaid("
 graph LR
-A(Rounded)-->B[Rectangular]
-B-->C{A Rhombus}
-C-->D[Rectangle One]
-C-->E[Rectangle Two]
-", height = 200)
+A((Input 1))-->B{Procedure}
+D((Input 2))-->B{Procedure}
+E((Input 3))-->B{Procedure}
+B-->C[Output 1]
+B-->F[Output 1]
+B-->G[Output 1]
+")
 ```
 
-Fig \@ref(sim1mod)
+In words, you have a **fixed** procedure that takes several _different_ inputs and produces an equal number of outputs. The following toy example illustrates this point:
+
+```{r, echo=-1}
+set.seed(123)
+f_sample_median <- function(true_mean) {
+  x <- rnorm(20, mean = true_mean)
+  median(x)
+}
+
+(means <- c(1,2,3))
+
+(sample_medians <- sapply(means, f_sample_median))
+```
+
+So here, `f_sample_median` is the procedure, `means` is the input, and `sample_medians` is the output:
+
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
+graph LR
+A((1))-->B{f_sample_median}
+D((2))-->B
+E((3))-->B
+B-->C[1.12]
+B-->F[1.86]
+B-->G[2.96]
+")
+```
+
+
+
