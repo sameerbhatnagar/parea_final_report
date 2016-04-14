@@ -10,7 +10,7 @@ Here are some results from a Google Search:
 1. A numerical technique for conducting experiments on the computer [@marie]
 2. Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one's own research[@hallgren2013conducting]
 
-I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way:
+I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way^[All flowcharts are created using the `DiagrammeR` pacakge [@R-DiagrammeR]]:
 
 ```{r, echo=FALSE}
 DiagrammeR::mermaid("
@@ -24,12 +24,16 @@ B-->G[Output 1]
 ")
 ```
 
-In words, you have a **fixed** procedure that takes several _different_ inputs and produces an equal number of outputs. The following toy example illustrates this point:
+There are three crucial components to any simulation study: 
+
+1. **Procedure** - something that doesn't change throughout the simulation study
+2. **Input**: _several_ values of the same quantity that are passed to the procedure. 
+3. **Output**: result from the procedure being applied to the inputs. Should be equal in length to the number of outputs. The following toy example illustrates this point:
 
 ```{r, echo=-1}
 set.seed(123)
 f_sample_median <- function(true_mean) {
-  x <- rnorm(20, mean = true_mean)
+  x <- rnorm(20, mean = true_mean, sd = 1)
   median(x)
 }
 
@@ -38,7 +42,7 @@ f_sample_median <- function(true_mean) {
 (sample_medians <- sapply(means, f_sample_median))
 ```
 
-So here, `f_sample_median` is the procedure, `means` is the input, and `sample_medians` is the output:
+So here, `f_sample_median` is the procedure that generates 20 random numbers from a normal distribution with standard deviation 1 and a user specified mean, and outputs the sample median. `means` is the input vector of user specified means, and `sample_medians` is the output:
 
 ```{r, echo=FALSE}
 DiagrammeR::mermaid("
@@ -51,6 +55,23 @@ B-->F[1.86]
 B-->G[2.96]
 ")
 ```
+
+
+Using this very general definition of the word _simulation_, I see the following analysis techinques as a type of simulation. 
+
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
+graph TB
+sq[Simulation] --> ci[Bootstrap]
+sq --> A[Cross Validation]
+sq --> B[Sensitivity Analysis]
+sq --> C[Permutations]
+classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+classDef orange fill:#f96,stroke:#333,stroke-width:4px;
+class sq green
+")
+```
+
 
 
 

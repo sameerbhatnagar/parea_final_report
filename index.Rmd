@@ -47,6 +47,5 @@ The greatest thing about `R` is that there are so many people out there willing 
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown', 'data.table', 'dplyr',
-  'purrr', 'boot', 'ggplot2'
-), 'packages.bib')
+  'purrr', 'boot', 'ggplot2', 'DiagrammeR'), 'packages.bib')
 ```
