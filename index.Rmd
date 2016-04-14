@@ -31,15 +31,22 @@ All examples in this book are run in an [R](https://cran.r-project.org/) environ
 The following packages will be called upon at some point, so please install them before getting started with the tutorials. Enter the following command in `R`:
 
 ```{r eval=FALSE, echo=TRUE}
-install.packages(c("data.table", "rmarkdown", "dplyr", ""))
+install.packages(c("data.table", "rmarkdown", "dplyr", "purrr", "tidyr", "ggplot2"))
 ```
 
 
+## Background Reading
+
+The greatest thing about `R` is that there are so many people out there willing to help you. `R` users are constantly writing tutorials and creating packages to make your analysis tasks easier. Here is a very targeted list that I suggest reading prior to starting the tutorials
+
+1. [Writing Functions](http://r4ds.had.co.nz/functions.html) 
+2. [For loops](http://r4ds.had.co.nz/iteration.html)
 
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'data.table', 'dplyr',
+  'purrr', 'boot', 'ggplot2'
 ), 'packages.bib')
 ```
