@@ -158,12 +158,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>A numerical technique for conducting experiments on the computer <span class="citation">(Davidian <a href="references.html#ref-marie">2005</a>)</span></li>
 <li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="references.html#ref-hallgren2013conducting">2013</a>)</span></li>
 </ol>
-<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way:</p>
-<p><div id="htmlwidget-5843" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5843">{"x":{"diagram":"\ngraph LR\nA((Input 1))-->B{Procedure}\nD((Input 2))-->B{Procedure}\nE((Input 3))-->B{Procedure}\nB-->C[Output 1]\nB-->F[Output 1]\nB-->G[Output 1]\n"},"evals":[],"jsHooks":[]}</script></p>
-<p>In words, you have a <strong>fixed</strong> procedure that takes several <em>different</em> inputs and produces an equal number of outputs. The following toy example illustrates this point:</p>
+<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>:</p>
+<p><div id="htmlwidget-2753" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2753">{"x":{"diagram":"\ngraph LR\nA((Input 1))-->B{Procedure}\nD((Input 2))-->B{Procedure}\nE((Input 3))-->B{Procedure}\nB-->C[Output 1]\nB-->F[Output 1]\nB-->G[Output 1]\n"},"evals":[],"jsHooks":[]}</script></p>
+<p>There are three crucial components to any simulation study:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Procedure</strong> - something that doesn’t change throughout the simulation study</li>
+<li><strong>Input</strong>: <em>several</em> values of the same quantity that are passed to the procedure.</li>
+<li><strong>Output</strong>: result from the procedure being applied to the inputs. Should be equal in length to the number of outputs. The following toy example illustrates this point:</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_sample_median &lt;-<span class="st"> </span>function(true_mean) {
-    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> true_mean)
+    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> true_mean, <span class="dt">sd =</span> <span class="dv">1</span>)
     <span class="kw">median</span>(x)
 }
 
@@ -171,9 +176,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## [1] 1 2 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(sample_medians &lt;-<span class="st"> </span><span class="kw">sapply</span>(means, f_sample_median))</code></pre></div>
 <pre><code>## [1] 1.119985 1.860057 2.964291</code></pre>
-<p>So here, <code>f_sample_median</code> is the procedure, <code>means</code> is the input, and <code>sample_medians</code> is the output:</p>
+<p>So here, <code>f_sample_median</code> is the procedure that generates 20 random numbers from a normal distribution with standard deviation 1 and a user specified mean, and outputs the sample median. <code>means</code> is the input vector of user specified means, and <code>sample_medians</code> is the output:</p>
 <p><div id="htmlwidget-6479" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-6479">{"x":{"diagram":"\ngraph LR\nA((1))-->B{f_sample_median}\nD((2))-->B\nE((3))-->B\nB-->C[1.12]\nB-->F[1.86]\nB-->G[2.96]\n"},"evals":[],"jsHooks":[]}</script></p>
+<p>Using this very general definition of the word <em>simulation</em>, I see the following analysis techinques as a type of simulation.</p>
+<p><div id="htmlwidget-3198" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3198">{"x":{"diagram":"\ngraph TB\nsq[Simulation] --> ci[Bootstrap]\nsq --> A[Cross Validation]\nsq --> B[Sensitivity Analysis]\nsq --> C[Permutations]\nclassDef green fill:#9f6,stroke:#333,stroke-width:2px;\nclassDef orange fill:#f96,stroke:#333,stroke-width:4px;\nclass sq green\n"},"evals":[],"jsHooks":[]}</script></p>
 
 </div>
 </div>
