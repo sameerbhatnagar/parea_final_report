@@ -25,7 +25,7 @@
 
 <meta name="author" content="Sahir Rai Bhatnagar">
 
-<meta name="date" content="2016-04-14">
+<meta name="date" content="2016-04-15">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -117,7 +117,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">Biostatistics in R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i><b>1.2</b> R Packages</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#background-reading"><i class="fa fa-check"></i><b>1.3</b> Background Reading</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="simulations.html"><a href="simulations.html"><i class="fa fa-check"></i><b>3</b> Simulations</a><ul>
 <li class="chapter" data-level="3.1" data-path="simulations.html"><a href="simulations.html#what-is-a-simulation-study"><i class="fa fa-check"></i><b>3.1</b> What is a simulation study?</a></li>
@@ -128,9 +132,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="7" data-path="placeholder.html"><a href="placeholder.html"><i class="fa fa-check"></i><b>7</b> Placeholder</a></li>
+<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -158,12 +165,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.1</span> What is a simulation study?</h2>
 <p>Here are some results from a Google Search:</p>
 <ol style="list-style-type: decimal">
-<li>A numerical technique for conducting experiments on the computer <span class="citation">(Davidian <a href="placeholder.html#ref-marie">2005</a>)</span></li>
-<li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="placeholder.html#ref-hallgren2013conducting">2013</a>)</span></li>
+<li>A numerical technique for conducting experiments on the computer <span class="citation">(Davidian <a href="references.html#ref-marie">2005</a>)</span></li>
+<li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="references.html#ref-hallgren2013conducting">2013</a>)</span></li>
 </ol>
-<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="placeholder.html#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>:</p>
-<p><div id="htmlwidget-2328" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2328">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
+<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>:</p>
+<p><div id="htmlwidget-3186" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3186">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
 <p>There are three crucial components to any simulation study:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Procedure</strong> - something that doesn’t change throughout the simulation study</li>
@@ -171,11 +178,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>Output</strong>: result from the procedure being applied to the inputs. Should be equal in length to the number of outputs. The following toy example illustrates this point:</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_sample_median &lt;-<span class="st"> </span>function(true_mean) {
-  x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> true_mean, <span class="dt">sd =</span> <span class="dv">1</span>)
-  <span class="kw">median</span>(x)
+    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> true_mean, <span class="dt">sd =</span> <span class="dv">1</span>)
+    <span class="kw">median</span>(x)
 }
 
-(means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</code></pre></div>
+(means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(sample_medians &lt;-<span class="st"> </span><span class="kw">sapply</span>(means, f_sample_median))</code></pre></div>
 <pre><code>## [1] 1.119985 1.860057 2.964291</code></pre>
@@ -194,21 +201,26 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.1</span> Understanding the behaviour of a statistical quantity</h3>
 <div id="example-1-the-central-limit-theorem" class="section level4">
 <h4><span class="header-section-number">3.2.1.1</span> Example 1: The Central Limit Theorem</h4>
-<p>The <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">Central Limit Theorem</a> is one of the most famous theorems in statistics. This theorem basically states that the sum or mean of independent random variables (with finite mean and variance) will converge to a normal distribution, regardless of the distribution of the random variables. The following figure clearly illustrates this point <span class="citation">(Joseph <a href="placeholder.html#ref-joseph">2010</a>)</span></p>
+<p>The <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">Central Limit Theorem</a> is one of the most famous theorems in statistics. This theorem basically states that the sum or mean of independent random variables (with finite mean and variance) will converge to a normal distribution, regardless of the distribution of the random variables. The following figure clearly illustrates this point <span class="citation">(Joseph <a href="references.html#ref-joseph">2010</a>)</span></p>
 <p><img src="images/clt.png" alt="" /><!-- --></p>
 <p>In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution as the number of observations approaches infinity. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in <code>R</code> to numerically verify this result. The simulation framework can be seen as follows:</p>
 <p><div id="htmlwidget-3077" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3077">{"x":{"diagram":"\ngraph LR\nA((Sample size n = 20))-->B{Generate n random numbers from<br>different distributions}\nD((Sample size n = 100))-->B\nE((Sample size n = 1000))-->B\nB-->C[Mean and variance of<br>sum based on n = 20]\nB-->F[Mean and variance of<br>sum based on n = 100]\nB-->G[Mean and variance of<br>sum based on n = 1000]\n"},"evals":[],"jsHooks":[]}</script></p>
 <p>Here we show a single run of the simulation with <span class="math inline">\(n = 10,000\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of observations to generate from each distribution</span>
-n &lt;-<span class="st"> </span><span class="fl">1e4</span>
+n &lt;-<span class="st"> </span><span class="dv">10000</span>
 
 <span class="co"># true parameters of each distribution</span>
-mean.walk &lt;-<span class="st"> </span><span class="dv">4</span> ; var.walk &lt;-<span class="st"> </span><span class="dv">1</span>
-mean.bus &lt;-<span class="st"> </span>(<span class="dv">4+16</span>)/<span class="dv">2</span> ; var.bus &lt;-<span class="st"> </span>(<span class="dv">16-4</span>)^<span class="dv">2</span>/<span class="dv">12</span>
-mean.ride &lt;-<span class="st"> </span><span class="dv">8</span> ; var.ride &lt;-<span class="st"> </span><span class="dv">8</span> 
-mean.climb &lt;-<span class="st"> </span><span class="dv">6</span>*<span class="fl">0.5</span> ; var.climb &lt;-<span class="st"> </span><span class="dv">6</span>*<span class="fl">0.5</span>^<span class="dv">2</span>
-mean.fall &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="dv">4</span> ; var.fall &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="dv">4</span>^<span class="dv">2</span>
+mean.walk &lt;-<span class="st"> </span><span class="dv">4</span>
+var.walk &lt;-<span class="st"> </span><span class="dv">1</span>
+mean.bus &lt;-<span class="st"> </span>(<span class="dv">4</span> +<span class="st"> </span><span class="dv">16</span>)/<span class="dv">2</span>
+var.bus &lt;-<span class="st"> </span>(<span class="dv">16</span> -<span class="st"> </span><span class="dv">4</span>)^<span class="dv">2</span>/<span class="dv">12</span>
+mean.ride &lt;-<span class="st"> </span><span class="dv">8</span>
+var.ride &lt;-<span class="st"> </span><span class="dv">8</span>
+mean.climb &lt;-<span class="st"> </span><span class="dv">6</span> *<span class="st"> </span><span class="fl">0.5</span>
+var.climb &lt;-<span class="st"> </span><span class="dv">6</span> *<span class="st"> </span><span class="fl">0.5</span>^<span class="dv">2</span>
+mean.fall &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="dv">4</span>
+var.fall &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="dv">4</span>^<span class="dv">2</span>
 
 <span class="co"># generate random samples from each distribution</span>
 walk &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, mean.walk, var.walk)
@@ -218,24 +230,26 @@ climb &lt;-<span class="st"> </span><span class="kw">rgamma</span>(n, <span clas
 fall &lt;-<span class="st"> </span><span class="kw">rexp</span>(n, <span class="dt">rate =</span> <span class="dv">1</span>/mean.fall)
 
 <span class="co"># true mean and variance of sum</span>
-mean.sum &lt;-<span class="st"> </span>mean.walk+mean.bus+mean.ride+mean.climb+mean.fall
-var.sum &lt;-<span class="st"> </span>var.walk+var.bus+var.ride+var.climb+var.fall
+mean.sum &lt;-<span class="st"> </span>mean.walk +<span class="st"> </span>mean.bus +<span class="st"> </span>mean.ride +<span class="st"> </span>mean.climb +<span class="st"> </span>mean.fall
+var.sum &lt;-<span class="st"> </span>var.walk +<span class="st"> </span>var.bus +<span class="st"> </span>var.ride +<span class="st"> </span>var.climb +<span class="st"> </span>var.fall
 
 <span class="co"># create a data frame of the data and calculate the sum for each sample</span>
 DT &lt;-<span class="st"> </span><span class="kw">data.frame</span>(walk, bus, ride, climb, fall)
-DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT,<span class="dv">1</span>,sum)
+DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span class="dv">1</span>, sum)
 
-<span class="co"># plot each histogram and superimpose theoretical </span>
-<span class="co"># distribution to empirical one</span>
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
-<span class="kw">hist</span>(walk, <span class="dt">main=</span><span class="st">&quot;Normal(mean=4,sd=1)&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">hist</span>(bus, <span class="dt">main=</span><span class="st">&quot;Uniform(a=4,b=16)&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">hist</span>(ride, <span class="dt">main=</span><span class="st">&quot;Poisson(lambda=8)&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">hist</span>(climb, <span class="dt">main=</span><span class="st">&quot;Gamma(shape=6, scale=0.5)&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">hist</span>(fall, <span class="dt">main=</span><span class="st">&quot;Exponential(rate=4)&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">hist</span>(DT$sum, <span class="dt">xlab=</span><span class="st">&#39;Total time&#39;</span>, <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;Distribution of Sum, n = &quot;</span>,n), <span class="dt">freq=</span><span class="ot">FALSE</span>)
-<span class="kw">curve</span>(<span class="kw">dnorm</span>(x,<span class="dt">mean=</span>mean.sum,<span class="dt">sd=</span><span class="kw">sqrt</span>(var.sum)),<span class="dv">0</span>,<span class="dv">50</span>,<span class="dt">add=</span><span class="ot">TRUE</span>,<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-7-1.png" alt="" /><!-- --></p>
+<span class="co"># plot each histogram and superimpose theoretical distribution to empirical</span>
+<span class="co"># one</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))
+<span class="kw">hist</span>(walk, <span class="dt">main =</span> <span class="st">&quot;Normal(mean=4,sd=1)&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">hist</span>(bus, <span class="dt">main =</span> <span class="st">&quot;Uniform(a=4,b=16)&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">hist</span>(ride, <span class="dt">main =</span> <span class="st">&quot;Poisson(lambda=8)&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">hist</span>(climb, <span class="dt">main =</span> <span class="st">&quot;Gamma(shape=6, scale=0.5)&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">hist</span>(fall, <span class="dt">main =</span> <span class="st">&quot;Exponential(rate=4)&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">hist</span>(DT$sum, <span class="dt">xlab =</span> <span class="st">&quot;Total time&quot;</span>, <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Distribution of Sum, n = &quot;</span>, 
+    n), <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mean.sum, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var.sum)), <span class="dv">0</span>, <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
+    <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" alt="" /><!-- --></p>
 </div>
 <div id="example-2-power-calculation" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Example 2: Power Calculation</h4>
@@ -252,7 +266,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT,<span clas
 <li>n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)</li>
 </ol>
 <p>In the figure below we plot the power curves for the <span class="math inline">\(t\)</span>-test, as a function of the effect size, assuming a Type I error rate of 5%.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-13-1.png" alt="" /><!-- --></p>
 <p>Here is the code used to produce the above plot</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr) <span class="co"># for power calcs</span>
 <span class="kw">library</span>(dplyr) <span class="co"># for data manipulation</span>
@@ -327,28 +341,28 @@ p +<span class="st"> </span>
 <h3><span class="header-section-number">3.2.2</span> Model selection and assessment</h3>
 <p>Model selection refers to</p>
 <blockquote>
-<p>Estimating the performance of different models in order to choose the best one <span class="citation">(Hastie, Tibshirani, and Friedman <a href="placeholder.html#ref-esl">2009</a>)</span></p>
+<p>Estimating the performance of different models in order to choose the best one <span class="citation">(Hastie, Tibshirani, and Friedman <a href="references.html#ref-esl">2009</a>)</span></p>
 </blockquote>
 <p>Model assessment refers to</p>
 <blockquote>
 <p>Estimating the prediction error on new data, given that a model has been selected</p>
 </blockquote>
-<p>In real data analysis problems we often have many models to choose from, for example, different combinations of covariates result in different models. The question is how can we can select the model that best fits the data and generalizes to other datasets? Information criteria such as the AIC, BIC and QIC can be used in different settings, however there are some known pitfalls to these (see for example <span class="citation">Y. Wang et al. (<a href="placeholder.html#ref-wang2015perils">2015</a>)</span>).</p>
+<p>In real data analysis problems we often have many models to choose from, for example, different combinations of covariates result in different models. The question is how can we can select the model that best fits the data and generalizes to other datasets? Information criteria such as the AIC, BIC and QIC can be used in different settings, however there are some known pitfalls to these (see for example <span class="citation">Y. Wang et al. (<a href="references.html#ref-wang2015perils">2015</a>)</span>).</p>
 Here is an example of model selection in the penalized regression setting. We consider a regression model for an outcome variable <span class="math inline">\(Y=(y_1, \ldots, y_n)\)</span> which follows an exponential family. Let <span class="math inline">\(\boldsymbol{X} = (X_{1}, \ldots, X_{p})\)</span> be a matrix of covariates, where <span class="math inline">\(p &gt;&gt; n\)</span>. Consider the regression model with main effects:
 \begin{align}
 g(\boldsymbol{\mu})  = &amp; \beta_0  + \beta_1 X_{1} + \cdots + \beta_p X_p  \label{eq:linpred1}
 \end{align}
-where <span class="math inline">\(g(\cdot)\)</span> is a known link function and <span class="math inline">\(\boldsymbol{\mu} = \mathsf{E}\left[Y|\boldsymbol{X}, \boldsymbol{\beta} \right]\)</span>. Our goal is to estimate the parameters <span class="math inline">\(\boldsymbol{\beta} = \left(\beta_1, \beta_2, \ldots, \beta_p\right) \in \mathbb{R}^{p+1}\)</span>. Due to the large number of parameters to estimate with respect to the number of observations, one commonly-used approach is to shrink the regression coefficients by placing a constraint on the values of <span class="math inline">\(\boldsymbol{\beta}\)</span>. For example, the LASSO <span class="citation">(R. Tibshirani <a href="placeholder.html#ref-tibshirani1996regression">1996</a>)</span> penalizes the squared loss of the data with the  of the regression coefficients resulting in a method that performs both model selection and estimation:
+where <span class="math inline">\(g(\cdot)\)</span> is a known link function and <span class="math inline">\(\boldsymbol{\mu} = \mathsf{E}\left[Y|\boldsymbol{X}, \boldsymbol{\beta} \right]\)</span>. Our goal is to estimate the parameters <span class="math inline">\(\boldsymbol{\beta} = \left(\beta_1, \beta_2, \ldots, \beta_p\right) \in \mathbb{R}^{p+1}\)</span>. Due to the large number of parameters to estimate with respect to the number of observations, one commonly-used approach is to shrink the regression coefficients by placing a constraint on the values of <span class="math inline">\(\boldsymbol{\beta}\)</span>. For example, the LASSO <span class="citation">(R. Tibshirani <a href="references.html#ref-tibshirani1996regression">1996</a>)</span> penalizes the squared loss of the data with the  of the regression coefficients resulting in a method that performs both model selection and estimation:
 \begin{equation}
 argmin_{\beta_0, \boldsymbol{\beta} } \,\,\, \frac{1}{2} \left\Vert Y - g(\boldsymbol{\mu}) \right\Vert ^2 + \lambda  \left\Vert \boldsymbol{\beta} \right\Vert_1  \label{eq:lassolikelihood}
 \end{equation}
 <p>where <span class="math inline">\(\left\Vert Y - g(\boldsymbol{\mu})\right\Vert^2 = \sum_i (y_i - g(\mu_i))^2\)</span>, <span class="math inline">\(\left\Vert \boldsymbol{\beta}\right\Vert_1 = \sum_j | \beta_j |\)</span> and <span class="math inline">\(\lambda \geq 0\)</span> is a data driven tuning parameter that can set some of the coefficients to zero when sufficiently large.</p>
-<p>It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal <span class="math inline">\(\lambda\)</span>. A very common techinque is to use cross-validation <span class="citation">(Hastie, Tibshirani, and Friedman <a href="placeholder.html#ref-esl">2009</a>)</span>:</p>
+<p>It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal <span class="math inline">\(\lambda\)</span>. A very common techinque is to use cross-validation <span class="citation">(Hastie, Tibshirani, and Friedman <a href="references.html#ref-esl">2009</a>)</span>:</p>
 <p><img src="images/cv.png" alt="" /><!-- --></p>
 <p>The data is split into <span class="math inline">\(K = 5\)</span> (or 10) roughly equal sized parts. The model is fit on all the data except the Kth part, and the prediction error of the fitted model is calculated on the Kth part. This is repeated K times, and the error from each fold is averaged. The simulation framework can be seen as follows:</p>
 <p><div id="htmlwidget-4492" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4492">{"x":{"diagram":"\ngraph LR\nA((Fold 1))-->B{Fit LASSO Model<br>on remaining folds}\nD((Fold 2))-->B\nE((Fold 3))-->B\nF((Fold 4))-->B\nG((Fold 5))-->B\nB-->C[Prediction error<br>on left-out fold]\nB-->H[Prediction error<br>on left-out fold]\nB-->I[Prediction error<br>on left-out fold]\nB-->J[Prediction error<br>on left-out fold]\nB-->K[Prediction error<br>on left-out fold]\n"},"evals":[],"jsHooks":[]}</script></p>
-<p>Note this is for a single tuning parameter. We would repeat the above steps for a range of tuning parameters. This technique for choosing the tuning parameter in Equation \ref{eq:lassolikelihood} is implemented in the <code>glmnet</code> package <span class="citation">(J. Friedman et al. <a href="placeholder.html#ref-R-glmnet">2016</a>)</span>:</p>
+<p>Note this is for a single tuning parameter. We would repeat the above steps for a range of tuning parameters. This technique for choosing the tuning parameter in Equation \ref{eq:lassolikelihood} is implemented in the <code>glmnet</code> package <span class="citation">(J. Friedman et al. <a href="references.html#ref-R-glmnet">2016</a>)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(glmnet)
 <span class="kw">set.seed</span>(<span class="dv">12345</span>)
 
@@ -362,25 +376,25 @@ p &lt;-<span class="st"> </span><span class="dv">1000</span>
 nzc &lt;-<span class="st"> </span><span class="dv">25</span>
 
 <span class="co"># covariates</span>
-x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n*p),n,p)
+x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n *<span class="st"> </span>p), n, p)
 
 <span class="co"># true beta coefficients</span>
 beta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nzc)
 
 <span class="co"># generate response. only the first nzc are associated with y</span>
-y &lt;-<span class="st"> </span>x[,<span class="kw">seq</span>(nzc)] %*%<span class="st"> </span>beta +<span class="st"> </span><span class="kw">rnorm</span>(n)*<span class="dv">5</span>
+y &lt;-<span class="st"> </span>x[, <span class="kw">seq</span>(nzc)] %*%<span class="st"> </span>beta +<span class="st"> </span><span class="kw">rnorm</span>(n) *<span class="st"> </span><span class="dv">5</span>
 
 <span class="co"># perform cross-validation</span>
-cvobj &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x,y)
+cvobj &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y)
 
 <span class="co"># plot cross validation curve</span>
 <span class="kw">plot</span>(cvobj)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" alt="" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># final selected model based on CV-selected lambda</span>
 coefobj &lt;-<span class="st"> </span><span class="kw">coef</span>(cvobj, <span class="dt">s =</span> <span class="st">&quot;lambda.min&quot;</span>)
 
 <span class="co"># non-zero elements of selected model and their effect estimate</span>
-coefobj[glmnet:::<span class="kw">nonzeroCoef</span>(coefobj),,drop =<span class="st"> </span>F]</code></pre></div>
+coefobj[glmnet:::<span class="kw">nonzeroCoef</span>(coefobj), , drop =<span class="st"> </span>F]</code></pre></div>
 <pre><code>## 31 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
 ##                       1
 ## (Intercept)  0.33746196
@@ -418,7 +432,7 @@ coefobj[glmnet:::<span class="kw">nonzeroCoef</span>(coefobj),,drop =<span class
 </div>
 <div id="calculating-measures-of-uncertainty" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Calculating measures of uncertainty</h3>
-<p>Bootstrap <span class="citation">(Stephens <a href="placeholder.html#ref-david">2015</a>)</span></p>
+<p>Bootstrap <span class="citation">(Stephens <a href="references.html#ref-david">2015</a>)</span></p>
 
 </div>
 </div>
