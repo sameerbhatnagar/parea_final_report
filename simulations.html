@@ -38,7 +38,7 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="intro.html">
+<link rel="prev" href="vectorization-apply-and-for-loops.html">
 <link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -126,7 +126,17 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i><b>1.2</b> R Packages</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#background-reading"><i class="fa fa-check"></i><b>1.3</b> Background Reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> For Loops</a></li>
+<li class="chapter" data-level="2" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html"><i class="fa fa-check"></i><b>2</b> Vectorization, *apply and for loops</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#vectorization"><i class="fa fa-check"></i><b>2.1</b> Vectorization</a></li>
+<li class="chapter" data-level="2.2" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#family-of-apply-functions"><i class="fa fa-check"></i><b>2.2</b> Family of <code>*apply</code> functions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#loops-vs.apply"><i class="fa fa-check"></i><b>2.2.1</b> Loops vs. Apply</a></li>
+<li class="chapter" data-level="2.2.2" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#descriptive-statistics-using-apply"><i class="fa fa-check"></i><b>2.2.2</b> Descriptive Statistics using <code>*apply</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#creating-new-columns-using-sapply"><i class="fa fa-check"></i><b>2.2.3</b> Creating new columns using <code>sapply</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#applying-functions-to-subsets-using-tapply"><i class="fa fa-check"></i><b>2.2.4</b> Applying functions to subsets using <code>tapply</code></a></li>
+<li class="chapter" data-level="2.2.5" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#nested-for-loops-using-mapply"><i class="fa fa-check"></i><b>2.2.5</b> Nested for loops using <code>mapply</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="vectorization-apply-and-for-loops.html"><a href="vectorization-apply-and-for-loops.html#creating-dynamic-documents-with-mapply"><i class="fa fa-check"></i><b>2.3</b> Creating dynamic documents with <code>mapply</code></a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="simulations.html"><a href="simulations.html"><i class="fa fa-check"></i><b>3</b> Simulations</a><ul>
 <li class="chapter" data-level="3.1" data-path="simulations.html"><a href="simulations.html#what-is-a-simulation-study"><i class="fa fa-check"></i><b>3.1</b> What is a simulation study?</a></li>
 <li class="chapter" data-level="3.2" data-path="simulations.html"><a href="simulations.html#why-conduct-a-simulation-study"><i class="fa fa-check"></i><b>3.2</b> Why conduct a simulation study?</a><ul>
@@ -166,9 +176,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>A numerical technique for conducting experiments on the computer <span class="citation">(Davidian <a href="references.html#ref-marie">2005</a>)</span></li>
 <li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="references.html#ref-hallgren2013conducting">2013</a>)</span></li>
 </ol>
-<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>:</p>
-<p><div id="htmlwidget-2469" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2469">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
+<p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
+<p><div id="htmlwidget-1163" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1163">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
 <p>There are three crucial components to any simulation study:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Procedure</strong> - something that doesn’t change throughout the simulation study</li>
@@ -247,7 +257,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
     n), <span class="dt">freq =</span> <span class="ot">FALSE</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mean.sum, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var.sum)), <span class="dv">0</span>, <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" alt="" /><!-- --></p>
 </div>
 <div id="example-2-power-calculation" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Example 2: Power Calculation</h4>
@@ -264,7 +274,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
 <li>n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)</li>
 </ol>
 <p>In the figure below we plot the power curves for the <span class="math inline">\(t\)</span>-test, as a function of the effect size, assuming a Type I error rate of 5%.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-13-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" alt="" /><!-- --></p>
 <p>Here is the code used to produce the above plot</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr) <span class="co"># for power calcs</span>
 <span class="kw">library</span>(dplyr) <span class="co"># for data manipulation</span>
@@ -387,7 +397,7 @@ cvobj &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y)
 
 <span class="co"># plot cross validation curve</span>
 <span class="kw">plot</span>(cvobj)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-27-1.png" alt="" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># final selected model based on CV-selected lambda</span>
 coefobj &lt;-<span class="st"> </span><span class="kw">coef</span>(cvobj, <span class="dt">s =</span> <span class="st">&quot;lambda.min&quot;</span>)
 
@@ -433,7 +443,7 @@ coefobj[glmnet:::<span class="kw">nonzeroCoef</span>(coefobj), , drop =<span cla
 <p>The Bootstrap <span class="citation">(Efron and Tibshirani <a href="references.html#ref-efron1994introduction">1994</a>)</span> is a widely used procedure to calculate measures of uncertainty (e.g. confidence intervals, standard errors of paramters). Its popularity is due to its relative simplicity. Furthermore, the data analyst often has no choice but to bootstrap because no closed form mathematical solution exists. The main idea is summarised in the following diagram:</p>
 <p><img src="images/sd.jpg" alt="" /><!-- --></p>
 <div id="example-1-non-parametric-bootstrap-for-confidence-intervals-of-the-mean" class="section level4">
-<h4><span class="header-section-number">3.2.3.1</span> Example 1: Non-parametric Bootstrap for Confidence Intervals of the mean<a href="references.html#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></h4>
+<h4><span class="header-section-number">3.2.3.1</span> Example 1: Non-parametric Bootstrap for Confidence Intervals of the mean<a href="references.html#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></h4>
 <p>The following data are the survival times for mice in a randomized experiment comparing a treated group with a control group.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># control group</span>
 (mouse.c &lt;-<span class="st"> </span><span class="kw">scan</span>(<span class="st">&quot;http://www.rohan.sdsu.edu/~babailey/stat672/mouse.c.data&quot;</span>))</code></pre></div>
@@ -503,7 +513,7 @@ mouse.ci &lt;-<span class="st"> </span><span class="kw">boot.ci</span>(bmean)
 
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="kw">c</span>(<span class="st">&#39;Est.&#39;</span>,<span class="st">&#39;Normal&#39;</span>,<span class="st">&#39;Basic&#39;</span>,<span class="st">&#39;Student&#39;</span>,<span class="st">&#39;Percent&#39;</span>,<span class="st">&#39;BCa&#39;</span>),
 <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;orange&#39;</span>),<span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-31-1.png" alt="" /><!-- --></p>
 </div>
 <div id="example-2-non-parametric-bootstrap-for-causal-effect-estimates-in-marginal-structural-models" class="section level4">
 <h4><span class="header-section-number">3.2.3.2</span> Example 2: Non-parametric Bootstrap for Causal Effect Estimates in Marginal Structural Models</h4>
@@ -524,6 +534,9 @@ mouse.ci &lt;-<span class="st"> </span><span class="kw">boot.ci</span>(bmean)
 ##     melanoma</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(boot) <span class="co"># for bootstrap confidence intervals</span>
 
+<span class="co"># function that fits the IPTW using PS for both models</span>
+<span class="co"># and returns the difference of the causal parameters</span>
+<span class="co"># this will be passed to the boot package</span>
 did &lt;-<span class="st"> </span>function(data, indices){
     
     d &lt;-<span class="st"> </span>data[indices,]
@@ -574,7 +587,7 @@ results &lt;-<span class="st"> </span><span class="kw">boot</span>(<span class="
 ##     original   bias    std. error
 ## t1* 1322.253 4.992589    735.5867</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(results)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-33-1.png" alt="" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boot.ci</span>(results, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>) )</code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
@@ -596,7 +609,7 @@ results &lt;-<span class="st"> </span><span class="kw">boot</span>(<span class="
           </div>
         </div>
       </div>
-<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vectorization-apply-and-for-loops.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
