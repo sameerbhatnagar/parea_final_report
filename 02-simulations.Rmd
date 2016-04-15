@@ -15,13 +15,9 @@ I prefer the second definition because it speaks to the generality of simulation
 ```{r, echo=FALSE}
 DiagrammeR::mermaid("
 graph LR
-A((Input 1))-->B{Procedure}
-D((Input 2))-->B{Procedure}
-E((Input 3))-->B{Procedure}
-B-->C[Output 1]
-B-->F[Output 1]
-B-->G[Output 1]
-")
+A((Input))-->B{Procedure}
+B-->C[Output]
+", height = 200)
 ```
 
 There are three crucial components to any simulation study: 
@@ -53,7 +49,7 @@ E((3))-->B
 B-->C[1.12]
 B-->F[1.86]
 B-->G[2.96]
-")
+", height = 300)
 ```
 
 
@@ -69,7 +65,7 @@ sq --> C[Permutations]
 classDef green fill:#9f6,stroke:#333,stroke-width:2px;
 classDef orange fill:#f96,stroke:#333,stroke-width:4px;
 class sq green
-")
+", height = 200)
 ```
 
 Boostrap, Cross Validation, Sensitivity analysis and Permutations are all similar in that they have multiple inputs with an equal number of outputs, with a fixed procedure. What differentiates them is the context in which they can be applied. The technique you choose depends entirely on the question you're trying to answer. 
@@ -89,10 +85,24 @@ The [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem)
 knitr::include_graphics("images/clt.png")
 ```
 
-In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in `R` to numerically verify this result:
+In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution as the number of observations approaches infinity. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in `R` to numerically verify this result. The simulation framework can be seen as follows:
+
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
+graph LR
+A((Sample size n = 20))-->B{Generate n random numbers from<br>different distributions}
+D((Sample size n = 100))-->B
+E((Sample size n = 1000))-->B
+B-->C[Mean and variance of<br>sum based on n = 20]
+B-->F[Mean and variance of<br>sum based on n = 100]
+B-->G[Mean and variance of<br>sum based on n = 1000]
+")
+```
+
+Here we show a single run of the simulation with $n = 10,000$
 
 ```{r}
-# number of random numbers to generate from each distribution
+# number of observations to generate from each distribution
 n <- 1e4
 
 # true parameters of each distribution
@@ -179,7 +189,30 @@ temp$group <- factor(temp$group, levels = c("n1=28, n2=1406", "n1=144, n2=1290",
 ```
 
 
-When performing [Student's t-test](https://en.wikipedia.org/wiki/Student%27s_t-test) to compare difference in means between two group, it is a useful exercise to determine the effect of unequal sample sizes in the comparison groups on **power**. Large imbalances generally will not have adequate statistical power to detect even large effect sizes associated with a factor, leading to a high Type II error rate as shown in the figure below:
+When performing [Student's t-test](https://en.wikipedia.org/wiki/Student%27s_t-test) to compare difference in means between two groups, it is a useful exercise to determine the effect of unequal sample sizes in the comparison group on **power**. Large imbalances generally will not have adequate statistical power to detect even large effect sizes associated with a factor, leading to a high Type II error rate. To jusity this reasoning I performed a power analysis for different group sizes. A power curve typically has power (the probability of rejecting the null hypothesis when the alternative hypothesis is true) on the y-axis, and a measure of association (or effect size) on the x-axis. For a given sample size of both groups, we can calculate a power curve by varying the true effect size. The simulation framework can be seen as follows:
+
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
+graph LR
+A((Effect Size 0.1))-->B{Procedure to calculate<br>power for t-test}
+D((Effect Size 0.5))-->B
+E((Effect Size 1))-->B
+B-->C[Power for effect size of 0.1]
+B-->F[Power for effect size of 0.5]
+B-->G[Power for effect size of 1]
+")
+```
+
+I considered the following group sizes:
+
+1. n1 = 28, n2 = 1406: n1 represents 2% of the entire sample size of 1434
+2. n1 = 144, n2 = 1290: n1 represents 10% of the entire sample size of 1434
+3. n1 = 287, n2 = 1147: n1 represents 20% of the entire sample size of 1434
+4. n1 = 430, n2 = 1004: n1 represents 30% of the entire sample size of 1434
+5. n1 = 574, n2 = 860: n1 represents 40% of the entire sample size of 1434
+6. n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)
+
+In the figure below we plot the power curves for the $t$-test, as a function of the effect size, assuming a Type I error rate of 5%.
 
 ```{r echo=FALSE, opts.label='fig.full'}
 p <- ggplot(temp, aes(x = `effect size`, y = power, color = group))
@@ -189,20 +222,9 @@ p + geom_line(size=2) + theme_bw() + theme(legend.position = "bottom",
                                            legend.text=element_text(size=14)) 
 ```
 
-To jusity this reasoning I performed a power analysis for different group sizes. I considered the following group sizes:
-
-1. n1 = 28, n2 = 1406: n1 represents 2% of the entire sample size of 1434
-2. n1 = 144, n2 = 1290: n1 represents 10% of the entire sample size of 1434
-3. n1 = 287, n2 = 1147: n1 represents 20% of the entire sample size of 1434
-4. n1 = 430, n2 = 1004: n1 represents 30% of the entire sample size of 1434
-5. n1 = 574, n2 = 860: n1 represents 40% of the entire sample size of 1434
-6. n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)
-
-In the figure above we plotted the power curves for the $t$-test, as a function of the effect size, assuming a Type I error rate of 5%. 
-
 Here is the code used to produce the above plot
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, tidy=FALSE}
 library(pwr) # for power calcs
 library(dplyr) # for data manipulation
 library(tidyr) # for data manipulation
@@ -273,21 +295,97 @@ theme(legend.position = "bottom",
 ```
 
 
-### Model selection
+### Model selection and assessment
+
+Model selection refers to
+
+> Estimating the performance of different models in order to choose the best one [@esl]
+
+Model assessment refers to
+
+> Estimating the prediction error on new data, given that a model has been selected  
+
+In real data analysis problems we often have many models to choose from, for example, different combinations of covariates result in different models. The question is how can we can select the model that best fits the data and generalizes to other datasets? Information criteria such as the AIC, BIC and QIC can be used in different settings, however there are some known pitfalls to these (see for example @wang2015perils). 
+
+Here is an example of model selection in the penalized regression setting. We consider a regression model for an outcome variable $Y=(y_1, \ldots, y_n)$ which follows an exponential family. Let $\boldsymbol{X} = (X_{1}, \ldots, X_{p})$ be a matrix of covariates, where $p >> n$. Consider the regression model with main effects:
+\begin{align}
+g(\boldsymbol{\mu})  = & \beta_0  + \beta_1 X_{1} + \cdots + \beta_p X_p  \label{eq:linpred1}
+\end{align}
+where $g(\cdot)$ is a known link function and $\boldsymbol{\mu} = \mathsf{E}\left[Y|\boldsymbol{X}, \boldsymbol{\beta} \right]$. Our goal is to estimate the parameters $\boldsymbol{\beta} = \left(\beta_1, \beta_2, \ldots, \beta_p\right) \in \mathbb{R}^{p+1}$. Due to the large number of parameters to estimate with respect to the number of observations, one commonly-used approach is to shrink the regression coefficients by placing a constraint on the values of $\boldsymbol{\beta}$. For example, the LASSO [@tibshirani1996regression] penalizes the squared loss of the data with the \mbox{$L_1$-norm} of the regression coefficients resulting in a method that performs both model selection and estimation:
+\begin{equation}
+argmin_{\beta_0, \boldsymbol{\beta} } \,\,\, \frac{1}{2} \left\Vert Y - g(\boldsymbol{\mu}) \right\Vert ^2 + \lambda  \left\Vert \boldsymbol{\beta} \right\Vert_1  \label{eq:lassolikelihood}
+\end{equation}
+where $\left\Vert Y - g(\boldsymbol{\mu})\right\Vert^2 = \sum_i (y_i - g(\mu_i))^2$, $\left\Vert \boldsymbol{\beta}\right\Vert_1 = \sum_j | \beta_j  |$ and $\lambda \geq 0$ is a data driven tuning parameter that can set some of the coefficients to zero when sufficiently large. 
+
+It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal $\lambda$. A very common techinque is to use cross-validation [@esl]: 
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/cv.png")
+```
+
+The data is split into $K = 5$ (or 10) roughly equal sized parts. The model is fit on all the data except the Kth part, and the prediction error of the fitted model is calculated on the Kth part. This is repeated K times, and the error from each fold is averaged. The simulation framework can be seen as follows:
+
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
+graph LR
+A((Fold 1))-->B{Fit LASSO Model<br>on remaining folds}
+D((Fold 2))-->B
+E((Fold 3))-->B
+F((Fold 4))-->B
+G((Fold 5))-->B
+B-->C[Prediction error<br>on left-out fold]
+B-->H[Prediction error<br>on left-out fold]
+B-->I[Prediction error<br>on left-out fold]
+B-->J[Prediction error<br>on left-out fold]
+B-->K[Prediction error<br>on left-out fold]
+")
+```
+
+Note this is for a single tuning parameter. We would repeat the above steps for a range of tuning parameters. This technique for choosing the tuning parameter in Equation \@ref(eq:lassolikelihood) is implemented in the `glmnet` package [@R-glmnet]:
 
 
+```{r, message=FALSE}
+library(glmnet)
+set.seed(12345)
 
+# number of subjects
+n <- 100
 
-### Model assessment
+# number of covariates
+p <- 1000
 
-CV
+# number of true non-zero coefficients
+nzc <- 25
+
+# covariates
+x <- matrix(rnorm(n*p),n,p)
+
+# true beta coefficients
+beta <- rnorm(nzc)
+
+# generate response. only the first nzc are associated with y
+y <- x[,seq(nzc)] %*% beta + rnorm(n)*5
+
+# perform cross-validation
+cvobj <- cv.glmnet(x,y)
+
+# plot cross validation curve
+plot(cvobj)
+
+# final selected model based on CV-selected lambda
+coefobj <- coef(cvobj, s = "lambda.min")
+
+# non-zero elements of selected model and their effect estimate
+coefobj[glmnet:::nonzeroCoef(coefobj),,drop = F]
+
+```
+
+While we have shown an example of model selection, cross validation can also be used to assess the chosen model but this should be done on an **independent** data set, i.e., one that was not used to train and select the model.
+
 
 ### Calculating measures of uncertainty 
 
-Bootstrap
-
-
-<script src="https://gist.github.com/sahirbhatnagar/9507cc24983103ad9f14.js"></script>
+Bootstrap [@david]
 
 
 
