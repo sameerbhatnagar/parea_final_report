@@ -488,6 +488,9 @@ To determine the effect of treatment on change in earnings from 1975 to 1978, we
 library(DAAG) # for the data
 library(boot) # for bootstrap confidence intervals
 
+# function that fits the IPTW using PS for both models
+# and returns the difference of the causal parameters
+# this will be passed to the boot package
 did <- function(data, indices){
     
     d <- data[indices,]
