@@ -17,6 +17,11 @@ install:
   - Rscript -e "if (!require('tidyr')) install.packages('tidyr')"
   - Rscript -e "if (!require('pwr')) install.packages('pwr')"
   - Rscript -e "if (!require('glmnet')) install.packages('glmnet')"
+  - Rscript -e "if (!require('boot')) install.packages('boot')"
+  - Rscript -e "if (!require('DAAG')) install.packages('DAAG')"
+  - Rscript -e "if (!require('DT')) install.packages('DT')"
+
+
 
 
 

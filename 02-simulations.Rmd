@@ -385,7 +385,150 @@ While we have shown an example of model selection, cross validation can also be 
 
 ### Calculating measures of uncertainty 
 
-Bootstrap [@david]
+The Bootstrap [@efron1994introduction] is a widely used procedure to calculate measures of uncertainty (e.g. confidence intervals, standard errors of paramters). Its popularity is due to its relative simplicity. Furthermore, the data analyst often has no choice but to bootstrap because no closed form mathematical solution exists. The main idea is summarised in the following diagram:
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/sd.jpg")
+```
+
+
+
+#### Example 1: Non-parametric Bootstrap for Confidence Intervals of the mean^[This example has been reproduced with permission from Dr. David A. Stephens [@david]]
+
+The following data are the survival times for mice in a randomized experiment comparing a treated group with a control group.
+
+```{r}
+# control group
+(mouse.c <- scan("http://www.rohan.sdsu.edu/~babailey/stat672/mouse.c.data"))
+
+# treatment group
+(mouse.t <- scan("http://www.rohan.sdsu.edu/~babailey/stat672/mouse.t.data"))
+```
+
+We are interested in bootstrap confidence intervals for the mean survival time in the control group:
+
+```{r}
+# number of mice in control group
+n.c <- length(mouse.c)
+
+# point estimates of mean and standard error of survival time
+mean(mouse.c)
+
+# recall that standard error of the mean is sigma/sqrt{n}
+# if the presumption of normality is made than this is the 
+# plug-in estimate of the standard error
+sd(mouse.c)*sqrt((n.c-1)/n.c^2)
+```
+
+
+We take advantage of thee very flexible `boot` package [@R-boot]:
+
+```{r, tidy=FALSE}
+library(boot)
+
+# define a function where the first argument is the data
+# and the second argument will take a vector of indices used to subset the data
+meancalc <- function(x,i) {
+  
+    # always subset the data first
+     d <- x[i]
+     m <- mean(d)
+     n <- length(i)
+     v <- (n-1)*var(d)/n^2
+     
+     # bootstrap variances needed for studentized intervals
+     return(c(m, v))
+}
+
+# run the boot function for B=10,000 bootstrap samples
+# the bootstrap statistics returns the bias for the sample mean (t1)
+# and sample variance 
+(bmean <- boot(mouse.c, meancalc, R = 1e4))
+
+# calculate different types of confidence intervals
+mouse.ci <- boot.ci(bmean)
+
+# histogram of bootstrap replicates and confidence intervals
+hist(bmean$t[,1], xlab = expression(theta), col='gray', xlim = c(0,150),
+     main = expression(paste('Bootstrap resamples of ', hat(theta))));box()
+
+
+abline(v = mean(mouse.c), col='red', lwd=2)
+abline(v=mouse.ci$normal[2:3],col='green')
+abline(v=mouse.ci$basic[4:5],col='blue')
+abline(v=mouse.ci$student[4:5],col='green',lty=2)
+abline(v=mouse.ci$percent[4:5],col='blue',lty=2)
+abline(v=mouse.ci$bca[4:5],col='orange')
+
+legend("topright",c('Est.','Normal','Basic','Student','Percent','BCa'),
+col=c('red','green','blue','green','blue','orange'),lty=c(1,1,1,2,2,1))
+```
+
+
+#### Example 2: Non-parametric Bootstrap for Causal Effect Estimates in Marginal Structural Models
+
+_Labour Training Evaluation Data_: This data frame from the `DAAG` package [@R-DAAG] contains 445 rows and 10 columns. These data are from an investigation of the effect of training on changes, between 1974-1975 and 1978, in the earnings of individuals who had experienced employment difficulties. Data are for the male experimental control and treatment groups. The goal of this study was to determine if a job training intervention led to increased earnings. The training program was created to encourage people to get to work and to take better jobs. Here are the data:
+
+```{r, echo=FALSE}
+DT::datatable(DAAG::nsw74demo)
+```
+
+We are interested in evaluating the effect of a binary treatment, participation in the training program or not, on the continuous outcome of real income in 1978. In this study, treatment is not randomized, therefore direct comparison of the 1978 earnings between treated and untreated will lead to a biased estimate of the effect of the training program. The covariates were not balanced between groups. 
+
+The propensity score (PS) for an individual, defined as the conditional probability of being treated given the individual's covariates, can be used to balance the covariates in the two groups, and thus reduce this bias. Once estimated, the propensity score can be used to reduce bias through weighted regression [@d1998tutorial]. Propensity scores provide a summary measure to control for multiple confounders simultaneously. Inverse probability of treatment weighting (IPTW) using PS has several advanages over multiple linear regression adjustment for several reasons. It is simpler to determine whether the propensity score (PS) model has been adequately specified [@austin2011introduction] by checking if the distribution of baseline measured covariates is similar in both groups conditional on the PS. Regression diagnostics are complicated when several predictors and their interactions are put in the model. Furthermore, for regression based methods, goodness of fit measures provide no test of whether the outcome model has been correctly specified, and the degree to which the fitted model has eliminated systematic difference between control and treatment groups [@austin2011introduction]. The PS is estimated without reference to the outcome whereas this is not the case in regression methods, which can lead to _hypothesis generation_, i.e. continually fit different models until a desirable result is achieved. Finally, IPTW methods can fit very complicated PS models with interactions and higher order terms, even non-parametrically, without concern of over-fitting since the goal is to obtain the best estimated probability of treatment assignment. 
+
+Let $Z$ denote the indicator for receiving treatment, $\mathbf{X}$ a vector of pre-exposure covariates, and $Y$ the observed outcome. To estimate the average causal treatment effect we use the potential outcomes framework [@rosenbaum1983central]. Let $Y_0$ and $Y_1$ denote the outcome a subject would have if they didn't and did received the training program, respectively. The causal effect of the training program on earnings may be defined as for instance the difference $Y_1-Y_0$. Since only one of the potential outcomes can be observed, in practice this difference is replaced by the average causal effect $\Delta=E(Y_1)-E(Y_0)$. If treatment assignment is completely randomized, i.e., $(Y_0,Y_1)\perp Z$ then $\bar{Y}_1 - \bar{Y}_0$ is an unbiased estimator for $\Delta$. However in this study this assumption is violated because the value of $Z$ has not been determined through complete randomization. It may be then that $(Y_0,Y_1)$ and $Z$ have common determinants, meaning that the treatment is informative of the pair of potential outcomes. If we assume $\mathbf{X}$ contains all confounders then among subjects sharing the same $\mathbf{X}$ there will be no association between exposure and potential outcomes, i.e., $(Y_0,Y_1)\perp Z|\mathbf{X}$. 
+
+The propensity score is defined as $e(\mathbf{X},\mathbf{\beta})= P(Z=1|\mathbf{X})$. We estimate this probability using logistic regression where $\mathbf{X}$ contains age, age$^2$, years of education and its square term, indicators for no degree, black, hispanic, actual 1974-1975 earnings and their square terms. Then we can estimate the causal parameter $\Delta$ using a weighted linear regression; regressing 1978 earnings on treatment with weights corresponding to $e(\mathbf{X},\mathbf{\widehat{\beta}})^{-1}$ for treated and $\left(1-e(\mathbf{X},\mathbf{\widehat{\beta}})\right)^{-1}$ for untreated individuals. 
+
+To determine the effect of treatment on change in earnings from 1975 to 1978, we will fit an IPTW regression model using 1975 earnings as the response. The covariates used for calculating the PS will be similar to the previous model except it will not have 1975 earnings in it. The desired effect estimate will then be the difference of the causal paramters estimated from each model, i.e., $\widehat{\Delta}_{\left(1978\right)} - \widehat{\Delta}_{\left(1975\right)}$. We will repeat this calculation on $B=4000$ (stratified on treatment) bootstrap samples to get an estimate of the standard error of this statistic.
+
+
+```{r, tidy=FALSE}
+library(DAAG) # for the data
+library(boot) # for bootstrap confidence intervals
+
+did <- function(data, indices){
+    
+    d <- data[indices,]
+   
+    # PS for 1978
+    ps1 <- glm(trt ~ age + I(age^2) + educ + I(educ^2) + black + hisp + 
+                           re74 + I(re74^2) + re75 + I(re75^2) + nodeg,
+                       data=d, family = "binomial")
+    
+    # weights
+    w1 <- 1/ifelse(d$trt==1,predict(ps1,type="response"),
+                   1-predict(ps1,type="response"))
+    
+    # Marginal structural model
+    msm1 <- lm(re78 ~ trt, weights=w1, data=d)
+    
+    # PS for 1975 (same as above but doesnt have 1975 earnings)
+    ps2 <- glm(trt ~ age + I(age^2) + educ + I(educ^2) + black + hisp + 
+                           re74 + I(re74^2) + nodeg,
+                       data=d, family = "binomial")
+    
+    w2 <- 1/ifelse(d$trt==1,predict(ps2,type="response"),
+                   1-predict(ps2,type="response"))
+    
+    msm2 <- lm(re75 ~ trt, weights=w2, data=d)
+    
+    # return the paramter of interest
+    return(coef(msm1)[2]-coef(msm2)[2])
+}
+
+
+results <- boot(data = nsw74demo, 
+                statistic = did, R = 1000, 
+                strata = factor(nsw74demo$trt))
+
+results
+
+plot(results)
+
+boot.ci(results, type = c("norm","basic", "perc") )
+```
 
 
 

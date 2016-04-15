@@ -34,7 +34,7 @@ The following packages will be called upon at some point, so please install them
 
 ```{r eval=FALSE, echo=TRUE}
 install.packages(c("knitr","data.table", "rmarkdown", "dplyr", "purrr", 
-                   "tidyr", "ggplot2", "pwr", "glmnet"))
+                   "tidyr", "ggplot2", "pwr", "glmnet", "boot","DAAG"))
 ```
 
 
@@ -50,5 +50,5 @@ The greatest thing about `R` is that there are so many people out there willing 
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown', 'data.table', 'dplyr',
-  'purrr', 'boot', 'ggplot2', 'DiagrammeR','glmnet'), 'packages.bib')
+  'purrr', 'boot', 'ggplot2', 'DiagrammeR','glmnet','DAAG'), 'packages.bib')
 ```
