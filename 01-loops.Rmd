@@ -180,11 +180,17 @@ dim(randomNormals)
 
 ## Creating dynamic documents with `mapply`
 
-Save the following code in a file called `template.Rnw`
+`mapply` together with the `rmarkdown` package [@R-rmarkdown] can be very useful to create dynamic documents for exploratory analysis. We illustrate this using the Motor Trend Car Road Tests data which comes pre-loaded in `R`. 
 
-```{r}
-mtcars
-```
+> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+
+Copy the code below in a file called `mapplyRmarkdown.Rmd` :
+
+<script src="https://gist.github.com/sahirbhatnagar/d2264c64b0213308dfaa537af1bfd9a7.js"></script>
+
+Copy the code below in a file called `boxplotTemplate` : 
+
+<script src="https://gist.github.com/sahirbhatnagar/4db246dd767eabb204eead836b29cd44.js"></script>
 
 
 

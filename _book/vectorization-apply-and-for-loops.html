@@ -190,13 +190,13 @@ x1 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 x2 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x1, x2))
 <span class="kw">head</span>(d)</code></pre></div>
-<pre><code>##          x1         x2
-## 1 0.7775907 0.05426602
-## 2 0.2052145 0.21540696
-## 3 0.2196830 0.34425887
-## 4 0.9933917 0.53337152
-## 5 0.8339855 0.38206796
-## 6 0.6706090 0.34860205</code></pre>
+<pre><code>##           x1        x2
+## 1 0.05737701 0.6981417
+## 2 0.38872652 0.5607380
+## 3 0.24303232 0.7795124
+## 4 0.90139764 0.1903174
+## 5 0.20297410 0.1139873
+## 6 0.60176972 0.8328472</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loop:</span>
 <span class="co"># create a vector to store the results in </span>
 rowMeanFor &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;double&quot;</span>, N)
@@ -286,13 +286,13 @@ randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm
                         <span class="dt">MoreArgs =</span> <span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">100</span>))
 
 <span class="kw">head</span>(randomNormals)</code></pre></div>
-<pre><code>##          [,1]      [,2]         [,3]
-## [1,] 4.753897  6.337325 -28.95065069
-## [2,] 5.848340  4.986695  -0.03084505
-## [3,] 6.425455 10.595238  -2.99559990
-## [4,] 4.197796 12.516972 -13.80267242
-## [5,] 5.600156 12.599777   4.33072116
-## [6,] 7.041694 13.356839  10.17859115</code></pre>
+<pre><code>##          [,1]      [,2]       [,3]
+## [1,] 6.774612  7.959221  -8.758044
+## [2,] 5.370869 15.230391 -19.120174
+## [3,] 4.347676 19.489983  -5.291814
+## [4,] 4.515484  1.188272 -23.130287
+## [5,] 4.895882 15.289938  -2.121837
+## [6,] 3.863820 13.205816   8.429858</code></pre>
 <p>The following diagram (from <a href="http://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments">r4ds</a>) describes exactly what is going on in the above function call to <code>mapply</code>:</p>
 <p><img src="images/mapply.png" alt="" /><!-- --></p>
 <p>Advantages:</p>
@@ -314,9 +314,14 @@ randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm
 </div>
 <div id="creating-dynamic-documents-with-mapply" class="section level2">
 <h2><span class="header-section-number">2.3</span> Creating dynamic documents with <code>mapply</code></h2>
-<p>Save the following code in a file called <code>template.Rnw</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-</code></pre></div>
+<p><code>mapply</code> together with the <code>rmarkdown</code> package <span class="citation">(Allaire et al. <a href="placeholder.html#ref-R-rmarkdown">2016</a>)</span> can be very useful to create dynamic documents for exploratory analysis. We illustrate this using the Motor Trend Car Road Tests data which comes pre-loaded in <code>R</code>.</p>
+<blockquote>
+<p>The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).</p>
+</blockquote>
+<p>Copy the code below in a file called <code>mapplyRmarkdown.Rmd</code> :</p>
+<script src="https://gist.github.com/sahirbhatnagar/d2264c64b0213308dfaa537af1bfd9a7.js"></script>
+<p>Copy the code below in a file called <code>boxplotTemplate</code> :</p>
+<script src="https://gist.github.com/sahirbhatnagar/4db246dd767eabb204eead836b29cd44.js"></script>
 
 </div>
 </div>
