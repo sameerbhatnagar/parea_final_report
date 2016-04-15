@@ -177,8 +177,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="references.html#ref-hallgren2013conducting">2013</a>)</span></li>
 </ol>
 <p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
-<p><div id="htmlwidget-1163" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1163">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
+<p><div id="htmlwidget-6093" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6093">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
 <p>There are three crucial components to any simulation study:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Procedure</strong> - something that doesn’t change throughout the simulation study</li>
@@ -257,7 +257,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
     n), <span class="dt">freq =</span> <span class="ot">FALSE</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mean.sum, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var.sum)), <span class="dv">0</span>, <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" alt="" /><!-- --></p>
 </div>
 <div id="example-2-power-calculation" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Example 2: Power Calculation</h4>
@@ -274,7 +274,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
 <li>n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)</li>
 </ol>
 <p>In the figure below we plot the power curves for the <span class="math inline">\(t\)</span>-test, as a function of the effect size, assuming a Type I error rate of 5%.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" alt="" /><!-- --></p>
 <p>Here is the code used to produce the above plot</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr) <span class="co"># for power calcs</span>
 <span class="kw">library</span>(dplyr) <span class="co"># for data manipulation</span>
@@ -397,7 +397,7 @@ cvobj &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y)
 
 <span class="co"># plot cross validation curve</span>
 <span class="kw">plot</span>(cvobj)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-27-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" alt="" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># final selected model based on CV-selected lambda</span>
 coefobj &lt;-<span class="st"> </span><span class="kw">coef</span>(cvobj, <span class="dt">s =</span> <span class="st">&quot;lambda.min&quot;</span>)
 
@@ -513,7 +513,7 @@ mouse.ci &lt;-<span class="st"> </span><span class="kw">boot.ci</span>(bmean)
 
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="kw">c</span>(<span class="st">&#39;Est.&#39;</span>,<span class="st">&#39;Normal&#39;</span>,<span class="st">&#39;Basic&#39;</span>,<span class="st">&#39;Student&#39;</span>,<span class="st">&#39;Percent&#39;</span>,<span class="st">&#39;BCa&#39;</span>),
 <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;orange&#39;</span>),<span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-31-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" alt="" /><!-- --></p>
 </div>
 <div id="example-2-non-parametric-bootstrap-for-causal-effect-estimates-in-marginal-structural-models" class="section level4">
 <h4><span class="header-section-number">3.2.3.2</span> Example 2: Non-parametric Bootstrap for Causal Effect Estimates in Marginal Structural Models</h4>
@@ -587,7 +587,7 @@ results &lt;-<span class="st"> </span><span class="kw">boot</span>(<span class="
 ##     original   bias    std. error
 ## t1* 1322.253 4.992589    735.5867</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(results)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-33-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-32-1.png" alt="" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boot.ci</span>(results, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>) )</code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates

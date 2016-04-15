@@ -212,13 +212,13 @@ x1 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 x2 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x1, x2))
 <span class="kw">head</span>(d)</code></pre></div>
-<pre><code>##           x1        x2
-## 1 0.05093135 0.1576354
-## 2 0.56009099 0.8945618
-## 3 0.93601493 0.3490065
-## 4 0.76003325 0.2598204
-## 5 0.62932545 0.8931752
-## 6 0.83810017 0.1310232</code></pre>
+<pre><code>##          x1        x2
+## 1 0.7014114 0.2975167
+## 2 0.5420143 0.3785209
+## 3 0.6957943 0.8948936
+## 4 0.5978620 0.4149985
+## 5 0.5158765 0.6741688
+## 6 0.3709253 0.6461739</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loop: create a vector to store the results in</span>
 rowMeanFor &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;double&quot;</span>, N)
 
@@ -306,13 +306,13 @@ sds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</
 randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm, <span class="dt">mean =</span> means, <span class="dt">sd =</span> sds, <span class="dt">MoreArgs =</span> <span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">100</span>))
 
 <span class="kw">head</span>(randomNormals)</code></pre></div>
-<pre><code>##          [,1]      [,2]        [,3]
-## [1,] 5.827592  1.267490  7.64438901
-## [2,] 2.979305  9.778608  2.07211626
-## [3,] 4.593380 13.089010 -7.30402837
-## [4,] 5.741942 18.787118  0.02943408
-## [5,] 5.206442 10.867859  5.08921513
-## [6,] 6.579050  9.042170 -2.32362165</code></pre>
+<pre><code>##          [,1]      [,2]      [,3]
+## [1,] 4.613746 10.867259 -7.355028
+## [2,] 3.243128  2.905126 -2.282893
+## [3,] 5.704670  1.843393 -3.567044
+## [4,] 4.972910  5.162670 13.744327
+## [5,] 5.324438 11.641402  3.540319
+## [6,] 5.404754  3.665487 -3.870523</code></pre>
 <p>The following diagram (from <a href="http://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments">r4ds</a>) describes exactly what is going on in the above function call to <code>mapply</code>:</p>
 <p><img src="images/mapply.png" alt="" /><!-- --></p>
 <p>Advantages:</p>
@@ -331,74 +331,14 @@ randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm
 </div>
 <div id="creating-dynamic-documents-with-mapply" class="section level2">
 <h2><span class="header-section-number">2.3</span> Creating dynamic documents with <code>mapply</code></h2>
-<p>Save the following code in a file called <code>template.Rnw</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars</code></pre></div>
-<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-##                     gear2
-## Mazda RX4            alot
-## Mazda RX4 Wag        alot
-## Datsun 710           alot
-## Hornet 4 Drive       some
-## Hornet Sportabout    some
-## Valiant              some
-## Duster 360           some
-## Merc 240D            alot
-## Merc 230             alot
-## Merc 280             alot
-## Merc 280C            alot
-## Merc 450SE           some
-## Merc 450SL           some
-## Merc 450SLC          some
-## Cadillac Fleetwood   some
-## Lincoln Continental  some
-## Chrysler Imperial    some
-## Fiat 128             alot
-## Honda Civic          alot
-## Toyota Corolla       alot
-## Toyota Corona        some
-## Dodge Challenger     some
-## AMC Javelin          some
-## Camaro Z28           some
-## Pontiac Firebird     some
-## Fiat X1-9            alot
-## Porsche 914-2        some
-## Lotus Europa         some
-## Ford Pantera L       some
-## Ferrari Dino         some
-## Maserati Bora        some
-## Volvo 142E           alot</code></pre>
+<p><code>mapply</code> together with the <code>rmarkdown</code> package <span class="citation">(Allaire et al. <a href="references.html#ref-R-rmarkdown">2016</a>)</span> can be very useful to create dynamic documents for exploratory analysis. We illustrate this using the Motor Trend Car Road Tests data which comes pre-loaded in <code>R</code>.</p>
+<blockquote>
+<p>The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).</p>
+</blockquote>
+<p>Copy the code below in a file called <code>mapplyRmarkdown.Rmd</code> :</p>
+<script src="https://gist.github.com/sahirbhatnagar/d2264c64b0213308dfaa537af1bfd9a7.js"></script>
+<p>Copy the code below in a file called <code>boxplotTemplate</code> :</p>
+<script src="https://gist.github.com/sahirbhatnagar/4db246dd767eabb204eead836b29cd44.js"></script>
 
 </div>
 </div>
