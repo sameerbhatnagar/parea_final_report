@@ -25,7 +25,7 @@
 
 <meta name="author" content="Sahir Rai Bhatnagar">
 
-<meta name="date" content="2016-04-15">
+<meta name="date" content="2016-04-17">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -213,12 +213,12 @@ x2 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x1, x2))
 <span class="kw">head</span>(d)</code></pre></div>
 <pre><code>##          x1        x2
-## 1 0.7014114 0.2975167
-## 2 0.5420143 0.3785209
-## 3 0.6957943 0.8948936
-## 4 0.5978620 0.4149985
-## 5 0.5158765 0.6741688
-## 6 0.3709253 0.6461739</code></pre>
+## 1 0.4247556 0.2080086
+## 2 0.1109235 0.8369060
+## 3 0.8552384 0.5248382
+## 4 0.3851704 0.3847416
+## 5 0.3134472 0.3436082
+## 6 0.3315820 0.0992554</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loop: create a vector to store the results in</span>
 rowMeanFor &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;double&quot;</span>, N)
 
@@ -306,13 +306,13 @@ sds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</
 randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm, <span class="dt">mean =</span> means, <span class="dt">sd =</span> sds, <span class="dt">MoreArgs =</span> <span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">100</span>))
 
 <span class="kw">head</span>(randomNormals)</code></pre></div>
-<pre><code>##          [,1]      [,2]      [,3]
-## [1,] 4.613746 10.867259 -7.355028
-## [2,] 3.243128  2.905126 -2.282893
-## [3,] 5.704670  1.843393 -3.567044
-## [4,] 4.972910  5.162670 13.744327
-## [5,] 5.324438 11.641402  3.540319
-## [6,] 5.404754  3.665487 -3.870523</code></pre>
+<pre><code>##          [,1]      [,2]       [,3]
+## [1,] 4.901751 17.460124  -6.871195
+## [2,] 3.896059  9.547166   1.621390
+## [3,] 3.515098  6.656200  -5.590766
+## [4,] 5.590918  9.910989  -5.167715
+## [5,] 5.347599 16.846756   6.147143
+## [6,] 5.014359 14.239626 -11.782185</code></pre>
 <p>The following diagram (from <a href="http://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments">r4ds</a>) describes exactly what is going on in the above function call to <code>mapply</code>:</p>
 <p><img src="images/mapply.png" alt="" /><!-- --></p>
 <p>Advantages:</p>
