@@ -12,14 +12,19 @@ Here are some results from a Google Search:
 
 I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way^[All flowcharts are created using the `DiagrammeR` pacakge [@R-DiagrammeR]]:
 
-```{r, echo=FALSE, results='asis'}
-gp <- DiagrammeR::mermaid("
+```{r, echo=FALSE}
+DiagrammeR::mermaid("
 graph LR
 A((Input))-->B{Procedure}
 B-->C[Output]
 ", height = 200)
-htmltools::knit_print.html(gp)
 ```
+
+```{r, results='asis'}
+svg <- export_svg(grViz('digraph{a->b; c->a; c->b; c->d;}'))
+svg
+```
+
 
 There are three crucial components to any simulation study: 
 
