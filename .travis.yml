@@ -20,6 +20,7 @@ install:
   - Rscript -e "if (!require('boot')) install.packages('boot')"
   - Rscript -e "if (!require('DAAG')) install.packages('DAAG')"
   - Rscript -e "if (!require('DT')) install.packages('DT')"
+  - Rscript -e "if (!require('htmltools')) install.packages('htmltools')"
 
 
 
