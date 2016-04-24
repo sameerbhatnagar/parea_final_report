@@ -13,6 +13,7 @@ install:
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
   - Rscript -e "if (!require('microbenchmark')) install.packages('microbenchmark')"
   - Rscript -e "if (!require('DiagrammeR')) install.packages('DiagrammeR')"
+  - Rscript -e "if (!require('DiagrammeRsvg')) install.packages('DiagrammeRsvg')"
   - Rscript -e "if (!require('dplyr')) install.packages('dplyr')"
   - Rscript -e "if (!require('tidyr')) install.packages('tidyr')"
   - Rscript -e "if (!require('pwr')) install.packages('pwr')"
@@ -20,11 +21,6 @@ install:
   - Rscript -e "if (!require('boot')) install.packages('boot')"
   - Rscript -e "if (!require('DAAG')) install.packages('DAAG')"
   - Rscript -e "if (!require('DT')) install.packages('DT')"
-  - Rscript -e "if (!require('htmltools')) install.packages('htmltools')"
-
-
-
-
 
 
 
