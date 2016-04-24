@@ -55,13 +55,6 @@ MathJax.Hub.Config({
 
 
 <script src="libs/htmlwidgets-0.6/htmlwidgets.js"></script>
-<script src="libs/d3-3.3.8/d3.min.js"></script>
-<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
-<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
-<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/chromatography-0.1/chromatography.js"></script>
-<script src="libs/DiagrammeR-binding-0.8.2/DiagrammeR.js"></script>
 <script src="libs/datatables-binding-0.1/datatables.js"></script>
 <script src="libs/datatables-1.10.7/jquery.dataTables.min.js"></script>
 <link href="libs/datatables-default-1.10.7/dataTables.extra.css" rel="stylesheet" />
@@ -212,13 +205,13 @@ x1 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 x2 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x1, x2))
 <span class="kw">head</span>(d)</code></pre></div>
-<pre><code>##          x1        x2
-## 1 0.4992679 0.6562448
-## 2 0.8252079 0.8175725
-## 3 0.2383820 0.8408455
-## 4 0.4205974 0.8793618
-## 5 0.3543309 0.7629277
-## 6 0.9246082 0.1496047</code></pre>
+<pre><code>##           x1         x2
+## 1 0.93196866 0.81751342
+## 2 0.14861694 0.47933846
+## 3 0.64465639 0.09915633
+## 4 0.31383613 0.38192113
+## 5 0.28983386 0.42311260
+## 6 0.09529535 0.49011556</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loop: create a vector to store the results in</span>
 rowMeanFor &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;double&quot;</span>, N)
 
@@ -307,14 +300,14 @@ randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm
 
 <span class="kw">head</span>(randomNormals)</code></pre></div>
 <pre><code>##          [,1]      [,2]       [,3]
-## [1,] 4.424940  6.886468   5.877390
-## [2,] 3.921244 18.253907  -1.861702
-## [3,] 5.438890 13.138834 -21.515717
-## [4,] 6.437016  5.311308   8.255565
-## [5,] 3.823379  1.812678   1.552501
-## [6,] 4.795232  8.209855 -10.489756</code></pre>
+## [1,] 5.400492  3.606588 -10.544957
+## [2,] 4.025367  4.395509   1.248023
+## [3,] 5.001900  8.994643 -10.234892
+## [4,] 5.004534  2.210005 -10.172234
+## [5,] 4.004708  5.368140  -6.539932
+## [6,] 4.478162 14.107530   6.502228</code></pre>
 <p>The following diagram (from <a href="http://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments">r4ds</a>) describes exactly what is going on in the above function call to <code>mapply</code>:</p>
-<p><img src="images/mapply.png" width="672" /></p>
+<p><img src="images/mapply.png" alt="" /><!-- --></p>
 <p>Advantages:</p>
 <ol style="list-style-type: decimal">
 <li>Result is automatically stored in a matrix</li>
