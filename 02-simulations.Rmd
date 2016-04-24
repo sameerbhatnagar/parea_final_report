@@ -1,6 +1,6 @@
 # Simulations
 
-In this chapter you'll learn how to conduct a simulation study. The word _simulation_ gets thrown around alot as a trivial concept, though I have found that this term is often either misused by epidemiologists or abused by statisticians. A source of this confusion arises from the fact that it is not well defined. This is not by accident. A simulation study has so many moving parts that it would be impossible to characterize in a single word. However, there are some common underlying themes behind simulation studies. For this reason, the main focus here will be on creating a general roadmap for conducting these types of analyses, that can be applied to your specific setting. 
+In this chapter you'll learn how to conduct a simulation study. The word _simulation_ gets thrown around a lot as a trivial concept, though I have found that this term is often either misused by epidemiologists or abused by statisticians. A source of this confusion arises from the fact that it is not well defined. This is not by accident. A simulation study has so many moving parts that it would be impossible to characterize in a single word. However, there are some common underlying themes behind simulation studies. For this reason, the main focus here will be on creating a general roadmap for conducting these types of analyses, that can be applied to your specific setting. 
 
 
 ## What is a simulation study?
@@ -10,9 +10,9 @@ Here are some results from a Google Search:
 1. A numerical technique for conducting experiments on the computer [@marie]
 2. Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one's own research[@hallgren2013conducting]
 
-I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way^[All flowcharts are created using the `DiagrammeR` pacakge [@R-DiagrammeR]]:
+I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way^[All flowcharts are created using the `DiagrammeR` package [@R-DiagrammeR]]:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 library(DiagrammeR)
 DiagrammeR::mermaid("
 graph LR
@@ -21,6 +21,7 @@ B-->C[Output]
 ", height = 200)
 ```
 
+![](images/sim1.png)
 
 There are three crucial components to any simulation study: 
 
@@ -42,7 +43,7 @@ f_sample_median <- function(true_mean) {
 
 So here, `f_sample_median` is the procedure that generates 20 random numbers from a normal distribution with standard deviation 1 and a user specified mean, and outputs the sample median. `means` is the input vector of user specified means, and `sample_medians` is the output:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 DiagrammeR::mermaid("
 graph LR
 A((1))-->B{f_sample_median}
@@ -54,10 +55,11 @@ B-->G[2.96]
 ", height = 300)
 ```
 
+![](images/sim2.png)
 
-Using this very general definition of the word _simulation_, I see the following analysis techinques as a type of simulation. 
+Using this very general definition of the word _simulation_, I see the following analysis techniques as a type of simulation. 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 DiagrammeR::mermaid("
 graph TB
 sq[Simulation] --> ci[Bootstrap]
@@ -70,7 +72,10 @@ class sq green
 ", height = 200)
 ```
 
-Boostrap, Cross Validation, Sensitivity analysis and Permutations are all similar in that they have multiple inputs with an equal number of outputs, with a fixed procedure. What differentiates them is the context in which they can be applied. The technique you choose depends entirely on the question you're trying to answer. 
+![](images/sim3.png)
+
+
+Bootstrap, Cross Validation, Sensitivity analysis and Permutations are all similar in that they have multiple inputs with an equal number of outputs, with a fixed procedure. What differentiates them is the context in which they can be applied. The technique you choose depends entirely on the question you're trying to answer. 
 
 ## Why conduct a simulation study?
 
@@ -89,7 +94,7 @@ knitr::include_graphics("images/clt.png")
 
 In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution as the number of observations approaches infinity. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in `R` to numerically verify this result. The simulation framework can be seen as follows:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 DiagrammeR::mermaid("
 graph LR
 A((Sample size n = 20))-->B{Generate n random numbers from<br>different distributions}
@@ -100,6 +105,9 @@ B-->F[Mean and variance of<br>sum based on n = 100]
 B-->G[Mean and variance of<br>sum based on n = 1000]
 ")
 ```
+
+![](images/sim4.png)
+
 
 Here we show a single run of the simulation with $n = 10,000$
 
@@ -191,9 +199,9 @@ temp$group <- factor(temp$group, levels = c("n1=28, n2=1406", "n1=144, n2=1290",
 ```
 
 
-When performing [Student's t-test](https://en.wikipedia.org/wiki/Student%27s_t-test) to compare difference in means between two groups, it is a useful exercise to determine the effect of unequal sample sizes in the comparison group on **power**. Large imbalances generally will not have adequate statistical power to detect even large effect sizes associated with a factor, leading to a high Type II error rate. To jusity this reasoning I performed a power analysis for different group sizes. A power curve typically has power (the probability of rejecting the null hypothesis when the alternative hypothesis is true) on the y-axis, and a measure of association (or effect size) on the x-axis. For a given sample size of both groups, we can calculate a power curve by varying the true effect size. The simulation framework can be seen as follows:
+When performing [Student's t-test](https://en.wikipedia.org/wiki/Student%27s_t-test) to compare difference in means between two groups, it is a useful exercise to determine the effect of unequal sample sizes in the comparison group on **power**. Large imbalances generally will not have adequate statistical power to detect even large effect sizes associated with a factor, leading to a high Type II error rate. To justify this reasoning I performed a power analysis for different group sizes. A power curve typically has power (the probability of rejecting the null hypothesis when the alternative hypothesis is true) on the y-axis, and a measure of association (or effect size) on the x-axis. For a given sample size of both groups, we can calculate a power curve by varying the true effect size. The simulation framework can be seen as follows:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 DiagrammeR::mermaid("
 graph LR
 A((Effect Size 0.1))-->B{Procedure to calculate<br>power for t-test}
@@ -204,6 +212,9 @@ B-->F[Power for effect size of 0.5]
 B-->G[Power for effect size of 1]
 ")
 ```
+
+![](images/sim5.png)
+
 
 I considered the following group sizes:
 
@@ -307,7 +318,7 @@ Model assessment refers to
 
 > Estimating the prediction error on new data, given that a model has been selected  
 
-In real data analysis problems we often have many models to choose from, for example, different combinations of covariates result in different models. The question is how can we can select the model that best fits the data and generalizes to other datasets? Information criteria such as the AIC, BIC and QIC can be used in different settings, however there are some known pitfalls to these (see for example @wang2015perils). 
+In real data analysis problems we often have many models to choose from, for example, different combinations of covariates result in different models. The question is how can we can select the model that best fits the data and generalizes to other data sets? Information criteria such as the AIC, BIC and QIC can be used in different settings, however there are some known pitfalls to these (see for example @wang2015perils). 
 
 Here is an example of model selection in the penalized regression setting. We consider a regression model for an outcome variable $Y=(y_1, \ldots, y_n)$ which follows an exponential family. Let $\boldsymbol{X} = (X_{1}, \ldots, X_{p})$ be a matrix of covariates, where $p >> n$. Consider the regression model with main effects:
 \begin{align}
@@ -319,7 +330,7 @@ argmin_{\beta_0, \boldsymbol{\beta} } \,\,\, \frac{1}{2} \left\Vert Y - g(\bolds
 \end{equation}
 where $\left\Vert Y - g(\boldsymbol{\mu})\right\Vert^2 = \sum_i (y_i - g(\mu_i))^2$, $\left\Vert \boldsymbol{\beta}\right\Vert_1 = \sum_j | \beta_j  |$ and $\lambda \geq 0$ is a data driven tuning parameter that can set some of the coefficients to zero when sufficiently large. 
 
-It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal $\lambda$. A very common techinque is to use cross-validation [@esl]: 
+It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal $\lambda$. A very common technique is to use cross-validation [@esl]: 
 
 ```{r, echo=FALSE}
 knitr::include_graphics("images/cv.png")
@@ -327,7 +338,7 @@ knitr::include_graphics("images/cv.png")
 
 The data is split into $K = 5$ (or 10) roughly equal sized parts. The model is fit on all the data except the Kth part, and the prediction error of the fitted model is calculated on the Kth part. This is repeated K times, and the error from each fold is averaged. The simulation framework can be seen as follows:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 DiagrammeR::mermaid("
 graph LR
 A((Fold 1))-->B{Fit LASSO Model<br>on remaining folds}
@@ -342,6 +353,9 @@ B-->J[Prediction error<br>on left-out fold]
 B-->K[Prediction error<br>on left-out fold]
 ")
 ```
+
+![](images/sim6.png)
+
 
 Note this is for a single tuning parameter. We would repeat the above steps for a range of tuning parameters. This technique for choosing the tuning parameter in Equation \@ref(eq:lassolikelihood) is implemented in the `glmnet` package [@R-glmnet]:
 
@@ -387,7 +401,7 @@ While we have shown an example of model selection, cross validation can also be 
 
 ### Calculating measures of uncertainty 
 
-The Bootstrap [@efron1994introduction] is a widely used procedure to calculate measures of uncertainty (e.g. confidence intervals, standard errors of paramters). Its popularity is due to its relative simplicity. Furthermore, the data analyst often has no choice but to bootstrap because no closed form mathematical solution exists. The main idea is summarised in the following diagram:
+The Bootstrap [@efron1994introduction] is a widely used procedure to calculate measures of uncertainty (e.g. confidence intervals, standard errors of parameters). Its popularity is due to its relative simplicity. Furthermore, the data analyst often has no choice but to bootstrap because no closed form mathematical solution exists. The main idea is summarized in the following diagram:
 
 ```{r, echo=FALSE}
 knitr::include_graphics("images/sd.jpg")
@@ -477,13 +491,13 @@ DT::datatable(DAAG::nsw74demo)
 
 We are interested in evaluating the effect of a binary treatment, participation in the training program or not, on the continuous outcome of real income in 1978. In this study, treatment is not randomized, therefore direct comparison of the 1978 earnings between treated and untreated will lead to a biased estimate of the effect of the training program. The covariates were not balanced between groups. 
 
-The propensity score (PS) for an individual, defined as the conditional probability of being treated given the individual's covariates, can be used to balance the covariates in the two groups, and thus reduce this bias. Once estimated, the propensity score can be used to reduce bias through weighted regression [@d1998tutorial]. Propensity scores provide a summary measure to control for multiple confounders simultaneously. Inverse probability of treatment weighting (IPTW) using PS has several advanages over multiple linear regression adjustment for several reasons. It is simpler to determine whether the propensity score (PS) model has been adequately specified [@austin2011introduction] by checking if the distribution of baseline measured covariates is similar in both groups conditional on the PS. Regression diagnostics are complicated when several predictors and their interactions are put in the model. Furthermore, for regression based methods, goodness of fit measures provide no test of whether the outcome model has been correctly specified, and the degree to which the fitted model has eliminated systematic difference between control and treatment groups [@austin2011introduction]. The PS is estimated without reference to the outcome whereas this is not the case in regression methods, which can lead to _hypothesis generation_, i.e. continually fit different models until a desirable result is achieved. Finally, IPTW methods can fit very complicated PS models with interactions and higher order terms, even non-parametrically, without concern of over-fitting since the goal is to obtain the best estimated probability of treatment assignment. 
+The propensity score (PS) for an individual, defined as the conditional probability of being treated given the individual's covariates, can be used to balance the covariates in the two groups, and thus reduce this bias. Once estimated, the propensity score can be used to reduce bias through weighted regression [@d1998tutorial]. Propensity scores provide a summary measure to control for multiple confounders simultaneously. Inverse probability of treatment weighting (IPTW) using PS has several advantages over multiple linear regression adjustment for several reasons. It is simpler to determine whether the propensity score (PS) model has been adequately specified [@austin2011introduction] by checking if the distribution of baseline measured covariates is similar in both groups conditional on the PS. Regression diagnostics are complicated when several predictors and their interactions are put in the model. Furthermore, for regression based methods, goodness of fit measures provide no test of whether the outcome model has been correctly specified, and the degree to which the fitted model has eliminated systematic difference between control and treatment groups [@austin2011introduction]. The PS is estimated without reference to the outcome whereas this is not the case in regression methods, which can lead to _hypothesis generation_, i.e. continually fit different models until a desirable result is achieved. Finally, IPTW methods can fit very complicated PS models with interactions and higher order terms, even non-parametrically, without concern of over-fitting since the goal is to obtain the best estimated probability of treatment assignment. 
 
 Let $Z$ denote the indicator for receiving treatment, $\mathbf{X}$ a vector of pre-exposure covariates, and $Y$ the observed outcome. To estimate the average causal treatment effect we use the potential outcomes framework [@rosenbaum1983central]. Let $Y_0$ and $Y_1$ denote the outcome a subject would have if they didn't and did received the training program, respectively. The causal effect of the training program on earnings may be defined as for instance the difference $Y_1-Y_0$. Since only one of the potential outcomes can be observed, in practice this difference is replaced by the average causal effect $\Delta=E(Y_1)-E(Y_0)$. If treatment assignment is completely randomized, i.e., $(Y_0,Y_1)\perp Z$ then $\bar{Y}_1 - \bar{Y}_0$ is an unbiased estimator for $\Delta$. However in this study this assumption is violated because the value of $Z$ has not been determined through complete randomization. It may be then that $(Y_0,Y_1)$ and $Z$ have common determinants, meaning that the treatment is informative of the pair of potential outcomes. If we assume $\mathbf{X}$ contains all confounders then among subjects sharing the same $\mathbf{X}$ there will be no association between exposure and potential outcomes, i.e., $(Y_0,Y_1)\perp Z|\mathbf{X}$. 
 
-The propensity score is defined as $e(\mathbf{X},\mathbf{\beta})= P(Z=1|\mathbf{X})$. We estimate this probability using logistic regression where $\mathbf{X}$ contains age, age$^2$, years of education and its square term, indicators for no degree, black, hispanic, actual 1974-1975 earnings and their square terms. Then we can estimate the causal parameter $\Delta$ using a weighted linear regression; regressing 1978 earnings on treatment with weights corresponding to $e(\mathbf{X},\mathbf{\widehat{\beta}})^{-1}$ for treated and $\left(1-e(\mathbf{X},\mathbf{\widehat{\beta}})\right)^{-1}$ for untreated individuals. 
+The propensity score is defined as $e(\mathbf{X},\mathbf{\beta})= P(Z=1|\mathbf{X})$. We estimate this probability using logistic regression where $\mathbf{X}$ contains age, age$^2$, years of education and its square term, indicators for no degree, black, Hispanic, actual 1974-1975 earnings and their square terms. Then we can estimate the causal parameter $\Delta$ using a weighted linear regression; regressing 1978 earnings on treatment with weights corresponding to $e(\mathbf{X},\mathbf{\widehat{\beta}})^{-1}$ for treated and $\left(1-e(\mathbf{X},\mathbf{\widehat{\beta}})\right)^{-1}$ for untreated individuals. 
 
-To determine the effect of treatment on change in earnings from 1975 to 1978, we will fit an IPTW regression model using 1975 earnings as the response. The covariates used for calculating the PS will be similar to the previous model except it will not have 1975 earnings in it. The desired effect estimate will then be the difference of the causal paramters estimated from each model, i.e., $\widehat{\Delta}_{\left(1978\right)} - \widehat{\Delta}_{\left(1975\right)}$. We will repeat this calculation on $B=4000$ (stratified on treatment) bootstrap samples to get an estimate of the standard error of this statistic.
+To determine the effect of treatment on change in earnings from 1975 to 1978, we will fit an IPTW regression model using 1975 earnings as the response. The covariates used for calculating the PS will be similar to the previous model except it will not have 1975 earnings in it. The desired effect estimate will then be the difference of the causal parameters estimated from each model, i.e., $\widehat{\Delta}_{\left(1978\right)} - \widehat{\Delta}_{\left(1975\right)}$. We will repeat this calculation on $B=4000$ (stratified on treatment) bootstrap samples to get an estimate of the standard error of this statistic.
 
 
 ```{r, tidy=FALSE}
