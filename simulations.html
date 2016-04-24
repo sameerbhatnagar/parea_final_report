@@ -8,7 +8,7 @@
   <title>Biostatistics in R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These are a collection of tutorials that I have found useful in statistical applications.">
-  <meta name="generator" content="bookdown 0.0.65 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.0.67 and GitBook 2.6.7">
 
   <meta property="og:title" content="Biostatistics in R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="Sahir Rai Bhatnagar">
 
-<meta name="date" content="2016-04-17">
+<meta name="date" content="2016-04-24">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -177,14 +177,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Simulations provide a powerful technique for answering a broad set of methodological and theoretical questions and provide a flexible framework to answer specific questions relevant to one’s own research<span class="citation">(Hallgren <a href="references.html#ref-hallgren2013conducting">2013</a>)</span></li>
 </ol>
 <p>I prefer the second definition because it speaks to the generality of simulations. I see simulations in the following way<a href="references.html#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>:</p>
-<p>list(diagram = "\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n")
-NULL
-200
-list(defaultWidth = NULL, defaultHeight = NULL, padding = NULL, viewer = list(defaultWidth = NULL, defaultHeight = NULL, padding = NULL, fill = TRUE, suppress = FALSE, paneHeight = NULL), browser = list(defaultWidth = NULL, defaultHeight = NULL, padding = NULL, fill = FALSE), knitr = list(defaultWidth = NULL, defaultHeight = NULL, figure = TRUE))
-NULL
-NULL
-NULL
-list()</p>
+<p><div id="htmlwidget-1807" style="width:672px;height:200px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1807">{"x":{"diagram":"\ngraph LR\nA((Input))-->B{Procedure}\nB-->C[Output]\n"},"evals":[],"jsHooks":[]}</script></p>
 <p>There are three crucial components to any simulation study:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Procedure</strong> - something that doesn’t change throughout the simulation study</li>
@@ -216,7 +210,7 @@ list()</p>
 <div id="example-1-the-central-limit-theorem" class="section level4">
 <h4><span class="header-section-number">3.2.1.1</span> Example 1: The Central Limit Theorem</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">Central Limit Theorem</a> is one of the most famous theorems in statistics. This theorem basically states that the sum or mean of independent random variables (with finite mean and variance) will converge to a normal distribution, regardless of the distribution of the random variables. The following figure clearly illustrates this point <span class="citation">(Joseph <a href="references.html#ref-joseph">2010</a>)</span></p>
-<p><img src="images/clt.png" alt="" /><!-- --></p>
+<p><img src="images/clt.png" width="672" /></p>
 <p>In this example, the statistical quantity of interest is the sum of the random variables. We want to verify that the sum of the time it takes to get to Purvis hall follows a normal distribution as the number of observations approaches infinity. Of course the CLT can be proven mathematically, but we can also simulate random numbers from different distributions in <code>R</code> to numerically verify this result. The simulation framework can be seen as follows:</p>
 <p><div id="htmlwidget-3077" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3077">{"x":{"diagram":"\ngraph LR\nA((Sample size n = 20))-->B{Generate n random numbers from<br>different distributions}\nD((Sample size n = 100))-->B\nE((Sample size n = 1000))-->B\nB-->C[Mean and variance of<br>sum based on n = 20]\nB-->F[Mean and variance of<br>sum based on n = 100]\nB-->G[Mean and variance of<br>sum based on n = 1000]\n"},"evals":[],"jsHooks":[]}</script></p>
@@ -263,7 +257,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
     n), <span class="dt">freq =</span> <span class="ot">FALSE</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mean.sum, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var.sum)), <span class="dv">0</span>, <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="example-2-power-calculation" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Example 2: Power Calculation</h4>
@@ -280,7 +274,7 @@ DT$sum &lt;-<span class="st"> </span><span class="kw">apply</span>(DT, <span cla
 <li>n1 = 717, n2 = 717: equal size groups (this is optimal because it leads to the highest power for a given effect size)</li>
 </ol>
 <p>In the figure below we plot the power curves for the <span class="math inline">\(t\)</span>-test, as a function of the effect size, assuming a Type I error rate of 5%.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Here is the code used to produce the above plot</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr) <span class="co"># for power calcs</span>
 <span class="kw">library</span>(dplyr) <span class="co"># for data manipulation</span>
@@ -372,7 +366,7 @@ argmin_{\beta_0, \boldsymbol{\beta} } \,\,\, \frac{1}{2} \left\Vert Y - g(\bolds
 \end{equation}
 <p>where <span class="math inline">\(\left\Vert Y - g(\boldsymbol{\mu})\right\Vert^2 = \sum_i (y_i - g(\mu_i))^2\)</span>, <span class="math inline">\(\left\Vert \boldsymbol{\beta}\right\Vert_1 = \sum_j | \beta_j |\)</span> and <span class="math inline">\(\lambda \geq 0\)</span> is a data driven tuning parameter that can set some of the coefficients to zero when sufficiently large.</p>
 <p>It should be noted here that different tuning parameters will lead to different models. So the question here is how to choose the optimal <span class="math inline">\(\lambda\)</span>. A very common techinque is to use cross-validation <span class="citation">(Hastie, Tibshirani, and Friedman <a href="references.html#ref-esl">2009</a>)</span>:</p>
-<p><img src="images/cv.png" alt="" /><!-- --></p>
+<p><img src="images/cv.png" width="672" /></p>
 <p>The data is split into <span class="math inline">\(K = 5\)</span> (or 10) roughly equal sized parts. The model is fit on all the data except the Kth part, and the prediction error of the fitted model is calculated on the Kth part. This is repeated K times, and the error from each fold is averaged. The simulation framework can be seen as follows:</p>
 <p><div id="htmlwidget-4492" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4492">{"x":{"diagram":"\ngraph LR\nA((Fold 1))-->B{Fit LASSO Model<br>on remaining folds}\nD((Fold 2))-->B\nE((Fold 3))-->B\nF((Fold 4))-->B\nG((Fold 5))-->B\nB-->C[Prediction error<br>on left-out fold]\nB-->H[Prediction error<br>on left-out fold]\nB-->I[Prediction error<br>on left-out fold]\nB-->J[Prediction error<br>on left-out fold]\nB-->K[Prediction error<br>on left-out fold]\n"},"evals":[],"jsHooks":[]}</script></p>
@@ -403,7 +397,7 @@ cvobj &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y)
 
 <span class="co"># plot cross validation curve</span>
 <span class="kw">plot</span>(cvobj)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># final selected model based on CV-selected lambda</span>
 coefobj &lt;-<span class="st"> </span><span class="kw">coef</span>(cvobj, <span class="dt">s =</span> <span class="st">&quot;lambda.min&quot;</span>)
 
@@ -447,7 +441,7 @@ coefobj[glmnet:::<span class="kw">nonzeroCoef</span>(coefobj), , drop =<span cla
 <div id="calculating-measures-of-uncertainty" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Calculating measures of uncertainty</h3>
 <p>The Bootstrap <span class="citation">(Efron and Tibshirani <a href="references.html#ref-efron1994introduction">1994</a>)</span> is a widely used procedure to calculate measures of uncertainty (e.g. confidence intervals, standard errors of paramters). Its popularity is due to its relative simplicity. Furthermore, the data analyst often has no choice but to bootstrap because no closed form mathematical solution exists. The main idea is summarised in the following diagram:</p>
-<p><img src="images/sd.jpg" alt="" /><!-- --></p>
+<p><img src="images/sd.jpg" width="672" /></p>
 <div id="example-1-non-parametric-bootstrap-for-confidence-intervals-of-the-mean" class="section level4">
 <h4><span class="header-section-number">3.2.3.1</span> Example 1: Non-parametric Bootstrap for Confidence Intervals of the mean<a href="references.html#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></h4>
 <p>The following data are the survival times for mice in a randomized experiment comparing a treated group with a control group.</p>
@@ -519,7 +513,7 @@ mouse.ci &lt;-<span class="st"> </span><span class="kw">boot.ci</span>(bmean)
 
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="kw">c</span>(<span class="st">&#39;Est.&#39;</span>,<span class="st">&#39;Normal&#39;</span>,<span class="st">&#39;Basic&#39;</span>,<span class="st">&#39;Student&#39;</span>,<span class="st">&#39;Percent&#39;</span>,<span class="st">&#39;BCa&#39;</span>),
 <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;orange&#39;</span>),<span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
 <div id="example-2-non-parametric-bootstrap-for-causal-effect-estimates-in-marginal-structural-models" class="section level4">
 <h4><span class="header-section-number">3.2.3.2</span> Example 2: Non-parametric Bootstrap for Causal Effect Estimates in Marginal Structural Models</h4>
@@ -593,7 +587,7 @@ results &lt;-<span class="st"> </span><span class="kw">boot</span>(<span class="
 ##     original   bias    std. error
 ## t1* 1322.253 4.992589    735.5867</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(results)</code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-32-1.png" alt="" /><!-- --></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boot.ci</span>(results, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>) )</code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates

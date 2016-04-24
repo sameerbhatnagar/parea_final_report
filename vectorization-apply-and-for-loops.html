@@ -8,7 +8,7 @@
   <title>Biostatistics in R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These are a collection of tutorials that I have found useful in statistical applications.">
-  <meta name="generator" content="bookdown 0.0.65 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.0.67 and GitBook 2.6.7">
 
   <meta property="og:title" content="Biostatistics in R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="Sahir Rai Bhatnagar">
 
-<meta name="date" content="2016-04-17">
+<meta name="date" content="2016-04-24">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -212,13 +212,13 @@ x1 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 x2 &lt;-<span class="st"> </span><span class="kw">runif</span>(N)
 d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(x1, x2))
 <span class="kw">head</span>(d)</code></pre></div>
-<pre><code>##           x1         x2
-## 1 0.62295625 0.95261582
-## 2 0.42282829 0.05408128
-## 3 0.11474280 0.01978808
-## 4 0.20661388 0.46716613
-## 5 0.71235456 0.47681228
-## 6 0.09991589 0.64774151</code></pre>
+<pre><code>##          x1        x2
+## 1 0.4992679 0.6562448
+## 2 0.8252079 0.8175725
+## 3 0.2383820 0.8408455
+## 4 0.4205974 0.8793618
+## 5 0.3543309 0.7629277
+## 6 0.9246082 0.1496047</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loop: create a vector to store the results in</span>
 rowMeanFor &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;double&quot;</span>, N)
 
@@ -307,14 +307,14 @@ randomNormals &lt;-<span class="st"> </span><span class="kw">mapply</span>(rnorm
 
 <span class="kw">head</span>(randomNormals)</code></pre></div>
 <pre><code>##          [,1]      [,2]       [,3]
-## [1,] 7.013531 21.932957   1.570980
-## [2,] 5.220017 17.275315  -3.867392
-## [3,] 4.022780  8.466912  12.082763
-## [4,] 5.573419 13.197257  -5.874207
-## [5,] 4.763020  2.216656 -29.945038
-## [6,] 4.422508 21.214353  18.436628</code></pre>
+## [1,] 4.424940  6.886468   5.877390
+## [2,] 3.921244 18.253907  -1.861702
+## [3,] 5.438890 13.138834 -21.515717
+## [4,] 6.437016  5.311308   8.255565
+## [5,] 3.823379  1.812678   1.552501
+## [6,] 4.795232  8.209855 -10.489756</code></pre>
 <p>The following diagram (from <a href="http://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments">r4ds</a>) describes exactly what is going on in the above function call to <code>mapply</code>:</p>
-<p><img src="images/mapply.png" alt="" /><!-- --></p>
+<p><img src="images/mapply.png" width="672" /></p>
 <p>Advantages:</p>
 <ol style="list-style-type: decimal">
 <li>Result is automatically stored in a matrix</li>
