@@ -10,13 +10,13 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: sahirbhatnagar/biosR
-description: "These are a collection of tutorials that I have found useful in statistical applications."
+github-repo: sameerbhatnagar/parea_final_report
+description: "our final report"
 ---
 
-# Prerequisites
+# Preface
 
-## Install R and RStudio
+## Install R 
 
 All examples in this book are run in an [R](https://cran.r-project.org/) environment. You also need a recent version of [RStudio](https://www.rstudio.com/products/rstudio/download/preview/), which is a software application that facilitates how you interact with `R`. It is developed by data enthusiasts who consider statistics to be more than just simulations, formulas and proofs. RStudio emphasizes the following: 
 
