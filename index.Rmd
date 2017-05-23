@@ -1,6 +1,6 @@
 --- 
-title: "Biostatistics in R"
-author: "Sahir Rai Bhatnagar"
+title: "PAREA"
+author: "Sameer Bhatnagar"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output:
